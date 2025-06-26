@@ -2,6 +2,7 @@
 title: "비전"
 permalink: /intro/vision/
 layout: single
+pagination: false
 ---
 
 # 🎯 우리의 비전
