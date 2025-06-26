@@ -1,9 +1,44 @@
 main:
-  - title: "Posts"
-    url: /posts/
-  - title: "Categories"
-    url: /categories/
-  - title: "Tags"
-    url: /tags/
-  - title: "About"
-    url: /about/
+  # - title: "Posts"
+  #   url: /posts/
+  # - title: "Categories"
+  #   url: /categories/
+  # - title: "Tags"
+  #   url: /tags/
+  # - title: "About"
+  #   url: /about/
+  - title: "소개"
+    url: "/intro/vision/"   # 상위 메뉴는 이동하지 않음
+    children:
+      - title: "비전"
+        url: /intro/vision/
+      - title: "인사말"
+        url: /intro/greeting/
+      - title: "단원소개"
+        url: /intro/members_profile/
+
+  - title: "공연"
+    url: "/concert/upcoming/"   # 상위 메뉴는 이동하지 않음
+    children:
+      - title: "공연 일정"
+        url: /concert/upcoming/
+      - title: "지난 공연"
+        url: /concert/previous/
+
+  - title: "미디어"
+    url: /media/photo/
+    children:
+      - title: "공연 사진"
+        url: /media/photo/
+      - title: "공연 영상"
+        url: /media/video/
+      - title: "언론보도"
+        url: /media/news/
+
+  - title: "고객지원"
+    url: /contact/notice/
+    children:
+      - title: "공지사항"
+        url: /contact/notice/
+      - title: "문의하기"
+        url: /contact/support/
