@@ -24,7 +24,8 @@ search: true
 
 # Build settings
 markdown: kramdown
-remote_theme: mmistakes/minimal-mistakes
+# remote_theme: mmistakes/minimal-mistakes
+# theme: minimal-mistakes
 # Outputting
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
@@ -99,6 +100,8 @@ defaults:
       comments: true
       share: true
       related: true
+      css:
+        - assets/css/custom.css
   # _pages
   - scope:
       path: "_pages"
@@ -106,6 +109,8 @@ defaults:
     values:
       layout: single
       author_profile: true
+      css:
+        - assets/css/custom.css
 
 category_archive:
   type: liquid
@@ -113,3 +118,9 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+
+collections:
+  pages:
+    output: true
+    permalink: /:path/
