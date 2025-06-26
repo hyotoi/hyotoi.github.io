@@ -1,0 +1,115 @@
+- name: Edward
+  instrument: Conductor
+  role: Principal Guest Conductor
+  image: /assets/images/members/edward.png
+  bio:
+    - 서울예고 수석 입학 및 졸업
+    - 커티스 음악원 전액 장학생 졸업
+    - 프랑크푸르트 방송 교향악단 단원 역임
+    - 서울시향 협연 및 독주회 활동 다수
+    - 클래식 음반 3집 발매, 평론가 추천 음반 선정
+
+- name: Yannick
+  instrument: Conductor
+  role: Music & Artistic Director 
+  image: /assets/images/members/dex.png
+  bio:
+    - 서울대학교 음악대학 졸업
+    - 베를린 한스 아이슬러 음악대학 석사 졸업
+    - 드레스덴 필하모닉 오보에 수석 역임
+    - 한국예술종합학교 강사로 활동 중
+    - 국내외 주요 국제 콩쿠르 다수 입상
+
+
+- name: Codex
+  instrument: Trumpet # Instrumentation
+  role: Principal # 수석
+  image: /assets/images/members/codex.png
+  bio:
+    - 이화여자대학교 음악대학 졸업
+    - 스위스 바젤 음악원 석사 졸업
+    - 루체른 페스티벌 오케스트라 수석 바순 연주자로 활동
+    - 다양한 현대음악 프로젝트에 참여
+    - 국내 3대 방송사 클래식 프로그램 다수 출연
+
+- name: Codex
+  instrument: Trumpet # Instrumentation
+  role: Associate Principal #부 수석
+  image: /assets/images/members/codex.png
+  bio:
+    - 한국예술종합학교 졸업
+    - 미국 맨해튼 음대 석사 졸업
+    - 뉴욕 청소년 오케스트라 수석 활동
+    - 한국 관악기 콩쿠르 1위 수상
+    - 현재 서울대학교 강사 및 국내 주요 오케스트라 객원 연주자
+
+- name: A
+  instrument: Violins # Instrumentation
+  role: Principal # 수석
+  image: /assets/images/members/dex.png
+  bio:
+    - 줄리아드 음대 학사 및 석사 졸업
+    - 유럽 주요 하프 콩쿠르 수상 경력 다수
+    - 파리 오페라 오케스트라 협연
+    - KBS 클래식FM 하프 솔로이스트로 정기 출연
+    - 클래식과 대중음악을 넘나드는 다채로운 무대 경험 보유
+
+- name: B
+  instrument: Violins # Instrumentation
+  role: Co-Principal # 공동수석 
+  image: /assets/images/members/dex.png
+  bio:
+    - 예원학교, 서울예고, 서울대 음대 수석 졸업
+    - 빈 국립음대 최고연주자과정 졸업
+    - 잘츠부르크 모차르테움 페스티벌 초청 연주자
+    - 다수의 국제 콩쿠르 수상 (파가니니, 퀸 엘리자베스 등)
+    - 현재 서울시립교향악단 악장 겸 객원 교수
+
+- name: 김유진
+  instrument: Violin
+  role: Concertmaster
+  image: /assets/images/members/dex.png
+  bio:
+    - 한국예술영재교육원 수료 후 독일 하노버 국립음대 졸업
+    - 뮌헨 필하모닉 아카데미 및 라이프치히 게반트하우스 실습 수료
+    - 국내외 콩쿠르 및 독주회 경험 풍부
+    - 클래식 유튜브 채널 운영 중 (구독자 1.2만 명)
+    - 현재 다양한 프로젝트 앙상블 활동 중
+
+- name: 박시후
+  instrument: Viola
+  role: Associate Principal
+  image: /assets/images/members/codex.png
+  bio:
+    - 한국예술종합학교 졸업
+    - 파리국립고등음악원 유학
+    - 서울시향 비올라 부수석 역임
+
+- name: 이가온
+  instrument: Cello
+  role: Section Member
+  image: /assets/images/members/dex.png
+  bio:
+    - 한양대학교 관현악과 졸업
+    - 로마 산타체칠리아 국립음악원 석사 졸업
+    - 유럽 오케스트라 연수 프로그램 다수 수료
+    - 현대음악 및 영화음악 세션 베이스 연주 경력 다수
+    - 클래식 저변 확대를 위한 청소년 교육활동 병행
+
+- name: 최다은
+  instrument: Flute
+  role: Principal
+  image: /assets/images/members/codex.png
+  bio:
+    - 이화여자대학교 졸업
+    - 프랑스 리옹 국립음악원 수료
+    - 부산시향 수석 플루티스트 역임
+
+- name: 정민석
+  instrument: Trumpet
+  role: Section Member
+  image: /assets/images/members/dex.png
+  bio:
+    - 서울예고 및 한국예술종합학교 졸업
+    - 미국 커티스 음악원 트럼펫 전공
+    - 필라델피아 유스 오케스트라 활동
