@@ -25,9 +25,9 @@ jobs:
           context: .
           push: true
           tags: |
-            yourdockerhub/your-repo:${{ github.ref_name }}
-            yourdockerhub/your-repo:latest
+            codexgrid/jekyll:${{ github.ref_name }}
+            codexgrid/jekyll:latest
 
-      - name: Trigger Render Deploy Hook (imgURL)
-        run: |
-          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}&imgURL=docker.io/yourdockerhub/your-repo:${{ github.ref_name }}"
+#      - name: Trigger Render Deploy Hook (imgURL)
+#        run: |
+#          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}&imgURL=docker.io/yourdockerhub/your-repo:${{ github.ref_name }}"
