@@ -7,7 +7,7 @@ pagination: false
 
 # 🎯 오케스트라 단원 소개
 
-<link rel="stylesheet" href="/_sass/members.css">
+<!-- <link rel="stylesheet" href="{{ '/assets/css/members.css' | relative_url }}"> -->
 
 <div class="member-gallery">
   {% for member in site.data.members %}
