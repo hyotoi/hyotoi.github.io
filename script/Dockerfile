@@ -6,7 +6,7 @@ WORKDIR /srv/jekyll
 RUN apk update && apk add --no-cache entr bash
 
 # Gem 설치 (이미지에 따라 캐시 최적화)
-COPY Gemfile Gemfile.lock ./
+COPY Gemfile ./
 RUN bundle install
 
 # 소스 복사
