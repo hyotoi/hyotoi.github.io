@@ -20,4 +20,4 @@ pagination:
 
 새해를 맞아 화려한 갈라 공연으로 클래식의 향연을 선사합니다.
 
-![gala](/assets/images/concert/2024-01-15-newyear-gala/image.png)
+![gala](/assets/images/concert/2024-01-15-newyear-gala/poster.png)

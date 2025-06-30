@@ -22,4 +22,4 @@ pagination:
 
 시대를 초월한 불후의 클래식 명곡을 감상할 기회.
 
-![classic](/assets/images/concert/2025-11-17-classic-masterpieces/image.png)
+![classic](/assets/images/concert/2025-11-17-classic-masterpieces/poster.png)

@@ -21,7 +21,7 @@ pagination:
 
 유명 오페라 아리아와 함께한 품격 있는 밤.
 
-![opera](/assets/images/concert/2024-02-26-opera-night/image.png)
+![opera](/assets/images/concert/2024-02-26-opera-night/poster.png)
 {% if paginator %}
   <p class="pagination-category-info">
     <strong>Pagination category:</strong> {{ paginator.category | default: 'All posts' }}

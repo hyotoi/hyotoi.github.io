@@ -20,5 +20,5 @@ pagination:
 
 돈키호테의 이야기, 뮤지컬 '맨 오브 라만차'!
 
-![men](/assets/images/concert/2025-12-28-men-of-lamancha/image.png)
+![men](/assets/images/concert/2025-12-28-men-of-lamancha/poster.png)
 

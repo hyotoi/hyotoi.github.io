@@ -22,4 +22,4 @@ pagination:
 
 겨울 밤을 아름답게 수놓을 갈라 콘서트 무대.
 
-![winter](/assets/images/concert/2025-11-24-winter-gala/image.png)
+![winter](/assets/images/concert/2025-11-24-winter-gala/poster.png)

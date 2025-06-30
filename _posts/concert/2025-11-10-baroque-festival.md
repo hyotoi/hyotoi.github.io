@@ -21,4 +21,4 @@ pagination:
 
 화려하고 웅장한 바로크 시대의 명곡을 한자리에서!
 
-![baroque](/assets/images/concert/2025-11-10-baroque-festival/image.png)
+![baroque](/assets/images/concert/2025-11-10-baroque-festival/poster.png)

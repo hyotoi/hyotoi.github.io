@@ -22,4 +22,4 @@ pagination:
 
 가을의 정취를 담은 감동적인 심포니 공연입니다.
 
-![autumn](/assets/images/concert/2025-10-20-autumn-symphony/image.png)
+![autumn](/assets/images/concert/2025-10-20-autumn-symphony/poster.png)

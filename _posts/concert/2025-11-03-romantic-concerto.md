@@ -20,4 +20,4 @@ pagination:
 
 낭만파 명곡을 감상할 수 있는 로맨틱한 협주곡의 밤.
 
-![romantic](/assets/images/concert/2025-11-03-romantic-concerto/image.png)
+![romantic](/assets/images/concert/2025-11-03-romantic-concerto/poster.png)
