@@ -10,7 +10,7 @@ main:
   - title: "소개"
     url: "/intro/vision/"   # 상위 메뉴는 이동하지 않음
     children:
-      - title: "비전"
+      - title: "비전ㆍ미션"
         url: /intro/vision/
       - title: "인사말"
         url: /intro/greeting/

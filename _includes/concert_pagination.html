@@ -1,0 +1,67 @@
+{% assign upcoming_posts = site.categories.concert | where_exp: "post", "post.tags contains 'upcoming'" | sort: "date" %}
+{% assign previous_posts = site.categories.concert | where_exp: "post", "post.tags contains 'previous'" | sort: "date" | reverse %}
+
+{% comment %} 현재 페이지의 index 계산 {% endcomment %}
+{% assign current_index = nil %}
+{% assign current_list = '' %}
+
+{% for post in upcoming_posts %}
+  {% if post.url == page.url %}
+    {% assign current_index = forloop.index0 %}
+    {% assign current_list = 'upcoming' %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if current_index == nil %}
+  {% for post in previous_posts %}
+    {% if post.url == page.url %}
+      {% assign current_index = forloop.index0 %}
+      {% assign current_list = 'previous' %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<nav class="pagination">
+  <ul>
+    {% if current_list == 'upcoming' %}
+      {% assign prev_index = current_index | minus: 1 %}
+      {% assign next_index = current_index | plus: 1 %}
+
+      {% if prev_index >= 0 %}
+        {% assign prev_post = upcoming_posts[prev_index] %}
+        <a href="{{ page.previous.url | relative_url }}" class="pagination--pager" title="{{ page.previous.title | markdownify | strip_html | strip}}">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
+      {% else %}
+        <a href="#" class="pagination--pager disabled">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
+      {% endif %}
+
+      {% if next_index < upcoming_posts.size %}
+        {% assign next_post = upcoming_posts[next_index] %}
+        <a href="{{ page.next.url | relative_url }}" class="pagination--pager" title="{{ page.next.title | markdownify | strip_html | strip}}">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
+      {% else %}
+        {% assign next_post = previous_posts[0] %}
+        <a href="{{ page.next.url | relative_url }}" class="pagination--pager" title="{{ page.next.title | markdownify | strip_html | strip}}">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
+      {% endif %}
+
+    {% elsif current_list == 'previous' %}
+      {% assign prev_index = current_index | minus: 1 %}
+      {% assign next_index = current_index | plus: 1 %}
+
+      {% if prev_index >= 0 %}
+        {% assign prev_post = previous_posts[prev_index] %}
+        <a href="{{ page.previous.url | relative_url }}" class="pagination--pager" title="{{ page.previous.title | markdownify | strip_html | strip}}">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
+      {% else %}
+        {% assign prev_post = upcoming_posts | last %}
+        <a href="{{ page.previous.url | relative_url }}" class="pagination--pager" title="{{ page.previous.title | markdownify | strip_html | strip}}">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
+      {% endif %}
+
+      {% if next_index < previous_posts.size %}
+        {% assign next_post = previous_posts[next_index] %}
+        <a href="{{ page.next.url | relative_url }}" class="pagination--pager" title="{{ page.next.title | markdownify | strip_html | strip}}">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
+      {% else %}
+        <a href="#" class="pagination--pager disabled">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
+      {% endif %}
+    {% endif %}
+  </ul>
+</nav>
