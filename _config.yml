@@ -21,7 +21,8 @@ twitter_username: username
 github_username: username
 minimal_mistakes_skin: air
 search: true
-
+url: "https://your-github-id.github.io"
+baseurl: "" # Don't edit this
 # Build settings
 markdown: kramdown
 # remote_theme: mmistakes/minimal-mistakes
