@@ -1,0 +1,26 @@
+#notice-table-body {
+  transition: opacity 0.3s ease;
+}
+
+.notice-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.notice-table th:nth-child(1),
+.notice-table td:nth-child(1) {
+  width: 10%;
+}
+
+.notice-table th:nth-child(2),
+.notice-table td:nth-child(2) {
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notice-table th:nth-child(3),
+.notice-table td:nth-child(3) {
+  width: 20%;
+}
