@@ -57,7 +57,7 @@ jobs:
           path: ./_site
 
   deploy:
-    needs: build
+    needs: build-and-update
     runs-on: ubuntu-latest
     environment:
       name: github-pages
