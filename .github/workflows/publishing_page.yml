@@ -1,0 +1,80 @@
+name: Build and Deploy Jekyll site with Gallery Update
+
+on:
+  push:
+    branches: ["master"]  # main 브랜치에 push되면 실행
+  workflow_dispatch:
+
+permissions:
+  contents: write   # 브랜치 생성/커밋/푸시 권한
+  pages: write      # GitHub Pages 배포 권한
+  id-token: write   # OIDC 인증용 권한 (필요시)
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Python 환경 설정 및 스크립트 실행
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install Python dependencies
+        run: pip install pyyaml
+
+      - name: Run gallery update script
+        run: python script/auto_update_all_galleries.py
+
+      # Ruby 환경 설정 및 Jekyll 빌드
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+
+      - name: Install Jekyll dependencies
+        run: bundle install
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      # gh-pages 브랜치로 체크아웃 후 _site 내용으로 커밋 준비
+      - name: Deploy to gh-pages branch
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+          # gh-pages 브랜치 생성(없으면) 또는 체크아웃
+          git fetch origin gh-pages || true
+          git switch gh-pages || git checkout --orphan gh-pages
+
+          # gh-pages 브랜치에 기존 파일 삭제 후 _site 내용 복사
+          git rm -rf . || true
+          cp -r _site/* ./
+          touch .nojekyll  # Jekyll 처리하지 않도록 설정
+
+          git add .
+          git commit -m "Deploy updated site with gallery [skip ci]" || echo "No changes to commit"
+
+          git push origin gh-pages
+
+  deploy:
+    needs: build-and-update
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
