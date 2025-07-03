@@ -51,31 +51,17 @@ jobs:
           JEKYLL_ENV: production
           PAGES_REPO_NWO: ${{ github.repository }}
 
-      # gh-pages 브랜치로 체크아웃 후 _site 내용으로 커밋 준비
-      - name: Deploy to gh-pages branch
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-
-          # gh-pages 브랜치 생성(없으면) 또는 체크아웃
-          git fetch origin gh-pages || true
-          git switch gh-pages || git checkout --orphan gh-pages
-
-          # gh-pages 브랜치에 기존 파일 삭제 후 _site 내용 복사
-          git rm -rf . || true
-          cp -r _site/* ./
-          touch .nojekyll  # Jekyll 처리하지 않도록 설정
-
-          git add .
-          git commit -m "Deploy updated site with gallery [skip ci]" || echo "No changes to commit"
-
-          git push origin gh-pages
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
 
   deploy:
-    needs: build-and-update
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
