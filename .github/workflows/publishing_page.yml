@@ -21,7 +21,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0  # 전체 히스토리를 가져와 origin 정보를 포함
       # Python 환경 설정 및 스크립트 실행
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -48,6 +49,7 @@ jobs:
         run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
+          PAGES_REPO_NWO: ${{ github.repository }}
 
       # gh-pages 브랜치로 체크아웃 후 _site 내용으로 커밋 준비
       - name: Deploy to gh-pages branch
