@@ -24,8 +24,8 @@ gallery:
   image_path: /assets/images/concert/2025-12-28-men-of-lamancha/vinicius-amnx-amano-pAwXYkNzgiI-unsplash.jpg
 - url: /assets/images/concert/2025-12-28-men-of-lamancha/vlah-dumitru-FvmwloIbCeQ-unsplash.jpg
   image_path: /assets/images/concert/2025-12-28-men-of-lamancha/vlah-dumitru-FvmwloIbCeQ-unsplash.jpg
-- url: /assets/images/concert/2025-12-28-men-of-lamancha/wan-san-yip-D-_JZhn-8kI-unsplash.jpg
-  image_path: /assets/images/concert/2025-12-28-men-of-lamancha/wan-san-yip-D-_JZhn-8kI-unsplash.jpg
+youtube:
+- https://youtu.be/47E2E95cON4?si=w__ydKrPvyZijdER
 ---
 
 돈키호테의 이야기, 뮤지컬 '맨 오브 라만차'!

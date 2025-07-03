@@ -28,6 +28,9 @@ gallery:
   image_path: /assets/images/concert/2024-01-15-newyear-gala/wan-san-yip-D-_JZhn-8kI-unsplash.jpg
 - url: /assets/images/concert/2024-01-15-newyear-gala/wan-san-yip-uWBKWeuEwAE-unsplash.jpg
   image_path: /assets/images/concert/2024-01-15-newyear-gala/wan-san-yip-uWBKWeuEwAE-unsplash.jpg
+youtube:
+- https://youtu.be/47E2E95cON4?si=w__ydKrPvyZijdER
+- https://youtu.be/etkK-l49NPM?si=ZeY9YXzKxzrTCxxG
 ---
 
 새해를 맞아 화려한 갈라 공연으로 클래식의 향연을 선사합니다.

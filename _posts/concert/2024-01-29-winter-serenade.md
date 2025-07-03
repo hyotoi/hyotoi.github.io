@@ -28,6 +28,10 @@ gallery:
   image_path: /assets/images/concert/2024-01-29-winter-serenade/wan-san-yip-D-_JZhn-8kI-unsplash.jpg
 - url: /assets/images/concert/2024-01-29-winter-serenade/wan-san-yip-uWBKWeuEwAE-unsplash.jpg
   image_path: /assets/images/concert/2024-01-29-winter-serenade/wan-san-yip-uWBKWeuEwAE-unsplash.jpg
+youtube:
+ - https://youtu.be/eAoL__MuXf8?si=dZax413DHbxLAJOz
+ - https://youtu.be/zQ0DBOd-jCw?si=UPnKWwOdiEij-Jxx
+ - https://youtu.be/Jy_v7CHsi0w?si=_01wOj7RpG4ftqHL
 ---
 
 겨울밤을 낭만적으로 수놓은 세레나데 공연.
