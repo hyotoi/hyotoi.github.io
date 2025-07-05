@@ -1,0 +1,51 @@
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 2rem;
+}
+
+.news-item {
+  display: block;             
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;     /* 상하 0.6rem, 좌우 0.8rem로 여백 축소 */
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.news-item:hover {
+  background-color: #f5f8ff;         /* hover 배경색 */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* hover 그림자 */
+  transform: translateY(-4px);       /* hover 살짝 뜨는 효과 */
+}
+
+/* 제목: 기본 상태에서 underline 제거, hover 시에만 underline */
+.post-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #222;
+  text-decoration: none;
+  transition: text-decoration 0.2s ease;
+}
+
+.news-item:hover .post-title {
+  text-decoration: underline;
+}
+
+/* 본문 요약 */
+.post-excerpt {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* 날짜 */
+.post-date {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #888;
+  text-align: right;
+}
