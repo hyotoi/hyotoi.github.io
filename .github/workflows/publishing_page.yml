@@ -2,7 +2,7 @@ name: Build and Deploy Jekyll site with Gallery Update
 
 on:
   push:
-    branches: ["master"]  # main 브랜치에 push되면 실행
+    branches: ["master","test_blog"]  # main 브랜치에 push되면 실행
   workflow_dispatch:
 
 permissions:
