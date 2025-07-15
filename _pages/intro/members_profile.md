@@ -18,17 +18,43 @@ pagination: false
       <div class="member-info">
         <div class="member-name">{{ member.name }}</div>
         <div class="member-instrument">{{ member.instrument | default: member.instruments }}</div>
-        <div class="member-role">({{ member.role }})</div>
+        <div class="member-role">({{ member.role | default: "단원" }})</div>
       </div>
 
       <div class="popup">
         <span class="close" onclick="event.stopPropagation(); this.parentElement.classList.remove('show')">&times;</span>
         <div class="popup-name">{{ member.name }}</div>
         <div class="popup-instrument">({{ member.instrument | default: member.instruments }})</div>
-        <div class="popup-role">{{ member.role }}</div>
-        {% for line in member.bio %}
-          <p class="popup-bio-line">- {{ line }}</p>
-        {% endfor %}
+        <div class="popup-role">{{ member.role | default: "단원" }}</div>
+
+        {% if member.education %}
+          <p class="popup-section-title">🎓 학력</p>
+          {% for item in member.education %}
+            <p class="popup-bio-line">- {{ item }}</p>
+          {% endfor %}
+        {% endif %}
+
+        {% if member.concours %}
+          <p class="popup-section-title">🏆 수상 내역</p>
+          {% for item in member.concours %}
+            <p class="popup-bio-line">- {{ item }}</p>
+          {% endfor %}
+        {% endif %}
+
+        {% if member.experience %}
+          <p class="popup-section-title">💼 경력</p>
+          {% for item in member.experience %}
+            <p class="popup-bio-line">- {{ item }}</p>
+          {% endfor %}
+        {% endif %}
+
+        {% if member.current %}
+          <p class="popup-section-title">🎵 현재 활동</p>
+          {% for item in member.current %}
+            <p class="popup-bio-line">- {{ item }}</p>
+          {% endfor %}
+        {% endif %}
+
       </div>
     </div>
   {% endfor %}

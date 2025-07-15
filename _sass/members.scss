@@ -1,4 +1,3 @@
-
 /* ===========================
       프로필 갤러리
 =========================== */
@@ -128,6 +127,17 @@
 
 .popup p {
   margin: 0;
-  line-height: 1.2; 
+  line-height: 1.2;
   font-size: 0.7rem;
+}
+
+/* 🎯 추가된 popup 제목 스타일 */
+.popup-section-title {
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #333;
+  border-left: 3px solid #2a7ae2;
+  padding-left: 0.5rem;
 }
