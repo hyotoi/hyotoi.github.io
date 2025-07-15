@@ -6,7 +6,7 @@ pagination: false
 ---
 
 <form
-  action="https://formspree.io/f/xqabjyjw"
+  action="https://formspree.io/f/xzzvbepl"
   method="POST"
   class="contact-form"
 >
