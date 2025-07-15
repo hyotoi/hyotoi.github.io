@@ -1,115 +1,344 @@
-- name: Edward
-  instrument: Conductor
-  role: Principal Guest Conductor
-  image: /assets/images/members/edward.png
-  bio:
-    - 서울예고 수석 입학 및 졸업
-    - 커티스 음악원 전액 장학생 졸업
-    - 프랑크푸르트 방송 교향악단 단원 역임
-    - 서울시향 협연 및 독주회 활동 다수
-    - 클래식 음반 3집 발매, 평론가 추천 음반 선정
-
-- name: Yannick
-  instrument: Conductor
-  role: Music & Artistic Director 
-  image: /assets/images/members/dex.png
-  bio:
-    - 서울대학교 음악대학 졸업
-    - 베를린 한스 아이슬러 음악대학 석사 졸업
-    - 드레스덴 필하모닉 오보에 수석 역임
-    - 한국예술종합학교 강사로 활동 중
-    - 국내외 주요 국제 콩쿠르 다수 입상
-
-
-- name: Codex
-  instrument: Trumpet # Instrumentation
-  role: Principal # 수석
-  image: /assets/images/members/codex.png
-  bio:
-    - 이화여자대학교 음악대학 졸업
-    - 스위스 바젤 음악원 석사 졸업
-    - 루체른 페스티벌 오케스트라 수석 바순 연주자로 활동
-    - 다양한 현대음악 프로젝트에 참여
-    - 국내 3대 방송사 클래식 프로그램 다수 출연
-
-- name: Codex
-  instrument: Trumpet # Instrumentation
-  role: Associate Principal #부 수석
-  image: /assets/images/members/codex.png
-  bio:
-    - 한국예술종합학교 졸업
-    - 미국 맨해튼 음대 석사 졸업
-    - 뉴욕 청소년 오케스트라 수석 활동
-    - 한국 관악기 콩쿠르 1위 수상
-    - 현재 서울대학교 강사 및 국내 주요 오케스트라 객원 연주자
-
-- name: A
-  instrument: Violins # Instrumentation
-  role: Principal # 수석
-  image: /assets/images/members/dex.png
-  bio:
-    - 줄리아드 음대 학사 및 석사 졸업
-    - 유럽 주요 하프 콩쿠르 수상 경력 다수
-    - 파리 오페라 오케스트라 협연
-    - KBS 클래식FM 하프 솔로이스트로 정기 출연
-    - 클래식과 대중음악을 넘나드는 다채로운 무대 경험 보유
-
-- name: B
-  instrument: Violins # Instrumentation
-  role: Co-Principal # 공동수석 
-  image: /assets/images/members/dex.png
-  bio:
-    - 예원학교, 서울예고, 서울대 음대 수석 졸업
-    - 빈 국립음대 최고연주자과정 졸업
-    - 잘츠부르크 모차르테움 페스티벌 초청 연주자
-    - 다수의 국제 콩쿠르 수상 (파가니니, 퀸 엘리자베스 등)
-    - 현재 서울시립교향악단 악장 겸 객원 교수
-
-- name: 김유진
-  instrument: Violin
-  role: Concertmaster
-  image: /assets/images/members/dex.png
-  bio:
-    - 한국예술영재교육원 수료 후 독일 하노버 국립음대 졸업
-    - 뮌헨 필하모닉 아카데미 및 라이프치히 게반트하우스 실습 수료
-    - 국내외 콩쿠르 및 독주회 경험 풍부
-    - 클래식 유튜브 채널 운영 중 (구독자 1.2만 명)
-    - 현재 다양한 프로젝트 앙상블 활동 중
-
-- name: 박시후
-  instrument: Viola
-  role: Associate Principal
-  image: /assets/images/members/codex.png
-  bio:
-    - 한국예술종합학교 졸업
-    - 파리국립고등음악원 유학
-    - 서울시향 비올라 부수석 역임
-
-- name: 이가온
+- name: 장경은
   instrument: Cello
-  role: Section Member
-  image: /assets/images/members/dex.png
-  bio:
-    - 한양대학교 관현악과 졸업
-    - 로마 산타체칠리아 국립음악원 석사 졸업
-    - 유럽 오케스트라 연수 프로그램 다수 수료
-    - 현대음악 및 영화음악 세션 베이스 연주 경력 다수
-    - 클래식 저변 확대를 위한 청소년 교육활동 병행
-
-- name: 최다은
+  role: 단원
+  education:
+  - 경기예술고등학교 수석입학 및 졸업
+  - 이화여대 관현악과 졸업
+  - 이화여대 음악학부 석사 수료
+  concours:
+  - 음악교육신문사 콩쿨 1위없는 2위
+  - 코리아 솔로이스츠 오케스트라 콩쿨 1위
+  - 코리아 솔로이스츠 오케스트라 유망 신예 음악회 협연
+  - 이원 꿈나무 콘서트 독주회
+  - 이화여대 실내악콩쿨 1위
+  experience:
+  - 부천필하모닉오케스트라, 전주시향, 서초교향악단, 한경아르떼필하모닉오케스트라,심포니송, 위필하모닉 객원
+  current: []
+  image: /assets/images/members/janggyeongeun.jpg
+- name: 오지홍
+  instrument: Violin
+  role: 단원
+  education:
+  - 서울예술고등학교 졸업
+  - 독일 뒤셀도르프 국립음대 입학
+  - 독일 뮌스터 국립음대 편입 후 학사 졸업
+  - 독일 뮌스터 국립음대 석사 최우수 졸업
+  concours:
+  - 난파음악콩쿠르
+  - 한음 콩쿠르
+  - 서울 필하모닉 콩쿠르
+  - 세종대학교 콩쿠르 1위
+  - 대한민국 학생 음악콩쿠르 특상
+  - 소리울 전국 음악콩쿠르 대상
+  experience:
+  - 독일 음악학교 Raab에서 마스터클래스
+  - 현재 scc 서울중앙음악학원 강사
+  - 계원예중, 덕원예고 강사
+  - 양평 국제 음악제 독주
+  - 금난새 지휘 UN 모의회의 개막식 연주
+  - 대구 학생문화회관 협연
+  - 독일(Gladbeck, Düsseldorf, Papenburg, Münster), 스위스(Arosa), 오스트리아(Salzburg), 주요르단
+    대한민국 대사관 등 에서 초청 독주회 및 연주
+  current:
+  - 로엔 필하모닉 오케스트라, 코리아모던필하모닉, 라네스 앙상블 단원
+  - 플래직 오케스트라 제 1 바이올린 수석 객원
+  - 성남시향, 디토 오케스트라, TIMF 통영국제음악재단 오케스트라 객원
+  image: /assets/images/members/ojihong.jpg
+- name: 조하영
+  instrument: Cello
+  role: 단원
+  education:
+  - Cleveland Institute of Music 학부, 석사 졸업 (우수 장학금)
+  concours: []
+  experience:
+  - 클리블랜드(Severance Hall), 뉴욕(Merkin Concert Hall), 뉴욕(Chautauqua Music festival),
+    Mixon Hall, Kulas Hall등 다수 홀에서 오케스트라, 실내악, 독주회 연주
+  - Cavani String Quartet, Emerson String Quartet, Cleveland String Quartet등의 실내악
+    코칭을 받음
+  - 뉴저지의 앤젤로스 미션 앙상블에서 실내악 코칭 및 지도
+  current:
+  - 심포니송, 한경arte, 강릉 시향 등 객원
+  image: /assets/images/members/johayeong.jpg
+- name: 최유나
   instrument: Flute
-  role: Principal
-  image: /assets/images/members/codex.png
-  bio:
-    - 이화여자대학교 졸업
-    - 프랑스 리옹 국립음악원 수료
-    - 부산시향 수석 플루티스트 역임
-
-- name: 정민석
-  instrument: Trumpet
-  role: Section Member
-  image: /assets/images/members/dex.png
-  bio:
-    - 서울예고 및 한국예술종합학교 졸업
-    - 미국 커티스 음악원 트럼펫 전공
-    - 필라델피아 유스 오케스트라 활동
+  role: 단원
+  education:
+  - 선화예술학교, 선화예술고등학교 졸업
+  - 이화여자대학교 학사, 석사 졸업
+  - 뒤셀도르프 국립 음대(Robert Schumann Hochschule Düsseldorf) 석사 및 최고연주자과정(Konzertexamen)
+    최우수졸업
+  concours:
+  - 한국플루트협회콩쿨, 헤이리전국음악콩쿨 1위
+  - 음악교육신문콩쿨 관악부문 전체대상
+  - 한국일보음악콩쿨 1위없는 2위
+  - 연세대관악동문콩쿨, 성정전국음악콩쿨 2위
+  - 이화여대음대실내악콩쿨 3위
+  - 2019 International Music Competition ‘Brussels’ Grand Prize Virtuoso 1위
+  experience:
+  - 이원문화센터 꿈나무 초청 연주회, J&R예술기획 영 아티스트 콘서트
+  - 금호 영 아티스트 콘서트 독주회, 음악춘추 우수신인 데뷔 연주회
+  - 영산아트홀 신인 연주자 시리즈 독주회
+  - 아카데미 앙상블 오케스트라, 서울 심포니 오케스트라 협연
+  - 선화예중 실기우수자 연주 및 협연(경찰대 오케스트라)
+  - 불가리아 플로브디브 심포니 오케스트라 협연
+  - 음악교육신문콩쿨 대상자 협연(모스틀리 오케스트라)
+  current:
+  - 한경 arte 단원
+  image: /assets/images/members/coeyuna.jpg
+- name: 공원경
+  instrument: Piano
+  role: 단원
+  education:
+  - 경기예술고등학교 영재원 수료
+  - 경기예술고등학교 졸업
+  - 이화여자대학교 학사 및 석사 졸업
+  - 독일 만하임 국립음대 반주과석사 및 기악
+  - 반주 최고연주자과정 만장일치 만점 졸업
+  concours:
+  - 이화여자대학교 실기 우수자 연주회 및 대학원 연주회
+  - 부천음협콩쿠르 1위
+  - 한음콩쿠르 2위,
+  - 음악교육신문사 콩쿠르 3위
+  - 이화 실내악 콩쿠르 3위
+  - International Music Competition 'Brussels' Grand Prize Virtuoso 실내악 부문 1위
+  experience:
+  - Heidelberg Musik Festival 연주
+  - Mannheimer Schloss Rittersaal 연주
+  - Junge Deutsche Philharmonie Probespiel Tuba 부문 공식 반주자 역임
+  - 독일 만하임 국립음대 반주조교 역임
+  - 곤지암 플루트 페스티벌 공식 반주자 역임
+  current:
+  - 한국반주협회 회원
+  image: /assets/images/members/gongweongyeong.jpg
+- name: 변주원
+  instrument: Clarinet
+  role: 단원
+  education:
+  - 독일 뮌스터 국립음대 심사위원 만장일치(최고점 전체수석 입학 및 졸업)
+  concours: []
+  experience:
+  - 독일 Yehudi Menuhin Live Music Now 오디션 우승, 소속 장학생 및 아티스트 역임
+  - 독일 뮌스터 Lackkustmuseum, 독일 쾰른 시립박물관등 다수의 초청독주회
+  - 독일 현대음악제 Musik unserer Zeit, 독일뮌스터 현대음악 학회 초청연주 (다수의 세계 초연곡 참여)
+  - 서초구청,경기문화재단,수원문화재단,화성시문화재단 등의 다수의 지원사업에 기획자로 선정
+  current:
+  - 트리오 노비스 (Trio Nobis) 멤버
+  - 앙상블 더 울림 음악감독
+  - 클라리넷 앙상블 휘 리더
+  - 서울그랜드필하모닉 오케스트라 수석
+  image: /assets/images/members/byeonjuweon.jpg
+- name: 현수진
+  instrument: Viola
+  role: 단원
+  education:
+  - 이화여자대학교 음악대학 졸업 및 동대학원 수료
+  concours:
+  - 현대자동차 온드림 문화예술 장학생 선정 및 해외파견콩쿠르 음악춘추콩쿠르 1위 등
+  - 다수의 국내 콩쿠르에서 수상
+  experience:
+  - 이화아카데미앙상블 창단 수석단원
+  - 전주 글로리아 스트링 오케스트라 객원수석 역임
+  - 한경 arte 필하모닉, 통영국제음악제 페스티벌오케스트라 객원 역임
+  current:
+  - 현 Ensembl:e, 전주챔버오케스트라 단원 및 전주시립교향악단 상임단원
+  image: /assets/images/members/hyeonsujin.jpg
+- name: 임지수
+  instrument: Violin
+  role: 단원
+  education:
+  - 쾰른 국립음대 학사 과정 최고점 졸업
+  - 쾰른 국립음대 석사 과정 최고점 졸업
+  - 하노버 국립음대 박사 최고점 졸업
+  concours:
+  - Internationaler Knopf Wettbewerb für Violine, Concorso Internazionale di Esecuzione
+    musicale‚ Giovani Musicisti‘, Interational Music Competition MAŁOPOLSKA 등 콩쿨입상
+  experience:
+  - Martin Schmidt Konzertsaal, Bad Pyrmont Konzerthaus 등에서 연주활동
+  - Aachen Konzertsaal에서 앨범 음반제작
+  - Tonstudio Tessmar에서 앨범 음반제작
+  - Nenad Lecic, Peter Wittenberg, Julia Okruashvili와의 연주활동
+  - Zakhar Bron, Nora Chastain, Boris Garlitsky, Rainer Schmidt, Dmitry Sitkovetsky,
+    Tanja Becker-Bender, Maria-Elisabeth Lott, Latica Honda-Rosenberg, Stephan Picard,
+    Albrecht Breuninger 등 마스터클래스 참여
+  current:
+  - 전주쳄버오케스트라, 베아토 예술인협회, 열린심포니오케스트라, BCO오케스트라, KPO오케스트라, 코리아모던필하모닉오케스트라 악장 역임
+  - Kpo 오케스트라 협연
+  - 전주쳄버오케스트라 협연
+  - 베아토 예술인협회 협연
+  - 계원예고 강사
+  - 수원대학교 영재원 강사
+  - 계원예고 콩쿨, National Youth Instrumental Music
+  - Competition 심사위원 위촉
+  image: /assets/images/members/imjisu.jpg
+- name: 황예찬
+  instrument: Violin
+  role: 단원
+  education:
+  - 서울대학교 졸업
+  - 독일 쾰른 음악대학 석사 졸업
+  - 한국예술종합학교 예비학교수료
+  - 예원학교 졸업
+  - 서울예술고등학교 졸업
+  concours:
+  - 음악춘추, 바로크콩쿠르, 음연콩쿠르, CBS콩쿠르, 더뮤직콩쿠르, 포네클래식콩쿠르, 국제아티스트콩쿠르, 서울종합예술학교콩쿠르, 폴란드(THE
+    INTERNATIONAL NAŁĘCZÓW & THE VIOLIN COMPETITION) 콩쿠르 입상
+  experience:
+  - 전주시립교향악단, 드림월드필하모닉오케스트라, 폴란드(Warsaw String Quintet) 협연
+  current:
+  - 심포니송 오케스트라 부수석
+  - 성남시향 객원부수석
+  - 천안시립교향악단 단원
+  - 인천학생교육문화회관출강
+  image: /assets/images/members/hwangyecan.jpg
+- name: 김민진
+  instrument: Cello
+  role: 단원
+  education:
+  - 추계예술대학교 수석 입학 및 수석 졸업(4년 장학생)
+  - Manhattan School of Music 석사 졸업
+  concours:
+  - CBS극동방송, 음악교육신문사, 서울오케스트라
+  - 한국음악협회 외 다수 콩쿨 입상
+  experience:
+  - 추계예술대학교 오케스트라 실기우수자 협연
+  - 대전예술의전당 베토벤 아벤트 아티스트 선정
+  - 한예음악콩쿨 수 상자 연주
+  - GM 뉴욕 수상자 Carnegie Hall 연주
+  - 말러리안 프로젝트 오케스트라 부수석 역임
+  - 성남시립 교향악단 객원 역임, 인천 예술고등학교
+  - 경기 예술고등학교 강사 역임
+  current:
+  - Want Duo, 트리오 디어 첼리스트
+  - 곽재선 문화재단 KG 필하모닉 단원
+  image: /assets/images/members/gimminjin.jpg
+- name: 조재민
+  instrument: Clarinet
+  role: 단원
+  education:
+  - 경희대학교 음악대학 졸업
+  concours:
+  - 평택시립교향악단과 협연
+  - 뮤지컬 마리 앙투아네트, 카르밀라 등에 참여
+  experience: []
+  current: []
+  image: /assets/images/members/jojaemin.jpg
+- name: 윤치원
+  instrument: Piano
+  role: 단원
+  education:
+  - 중앙대학교 음악대학 학사 졸업
+  - 대전예술고등학교 음악과 졸업
+  concours:
+  - 음악교육신문사 콩쿨 2위
+  experience:
+  - D'art orchestra 협연
+  - 음악교육신문 초청 차세대 유망주 콘서트
+  - prof.Francoise Thinat Master class
+  - 전 글로리아 챔버오케스트라, 다올앙상블, 국악 앙상블 樂플러 단원
+  - 전 리스트 피아노 스튜디오 대표
+  current: []
+  image: /assets/images/members/yunciweon.jpg
+- name: 장희영
+  instrument: Violin
+  role: 단원
+  education:
+  - 부산예술고등학교 관현악과 수석 장학생
+  - 입학 및 실기 우수 졸업
+  - 이화여자대학교 음악대학 관현악과 졸업
+  concours: []
+  experience:
+  - 미국 Atlantic Music Festival 참가 및 연주
+  - 뮤지컬 『자명고가 울린다』 작곡가 및 음악감독
+  - 연극 『팸의 아이들』 작곡가
+  - 연극 『물수제비 잘하는 법』 작곡가
+  - 뮤지컬 『White Vutterfly』 음악감독
+  - 국가문화유산청 주최 [정동야행] 초청 연주
+  - 문화체육관광부 주최 [청년문화포럼] 초청 연주
+  - 서울페스타필하모닉오케스트라 단원
+  - 바이올린 커버 채널 'Heeing's playlist' 운영
+  - 음악제작 채널 '음악서재[Heeing's Music diary] 운영
+  current: []
+  image: /assets/images/members/janghyiyeong.jpg
+- name: 민서영
+  instrument: bn
+  role: 단원
+  education:
+  - 이화여자대학교 학사 졸업
+  - 노스웨스턴 대학교 석사 전액장학생 졸업
+  - 드폴 대학교 연주자 과정 졸업
+  concours: []
+  experience:
+  - 정명훈 원코리아유스 오캐스트라 단원 역임
+  - 시카고 SEEN 오케스트라 단원 역임
+  - 시카고 시빅 오케스트라 정단원 역임
+  - KG필하모닉 창단 단원
+  current: []
+  image: /assets/images/members/minseoyeong.jpg
+- name: 김예원
+  instrument: Violin
+  role: 단원
+  education:
+  - 예원학교 졸업
+  - 서울예술고등학교 졸업
+  - 이화여자대학교 학사 및 석사
+  concours:
+  - 음악춘추 우수신인데뷔
+  - 음연콩쿠르1위 , 예진콩쿠르 금상
+  experience:
+  - 모테트 챔버, 이화필하모닉오케스트라, 밀레니엄심포니 단원
+  current: []
+  image: /assets/images/members/gimyeweon.jpg
+- name: 양혜영
+  instrument: Harp
+  role: 단원
+  education:
+  - 선화예술고등학교 졸업,
+  - 연세대학교 관현악과 졸업
+  concours:
+  - 해외파견 콩쿠르, 아세아음악가연맹 전국 음악콩쿠르
+  - 서울내셔널심포니오케스트라콩쿠르
+  - 유니버셜콩쿠르등 다수의 콩쿠르 입상
+  experience:
+  - 수원시향, 전주시향, 강릉시향, 창원시향, 광주시향, 울산시향 등 다수 오케스트라 객원 및 객원 수석
+  current: []
+  image: /assets/images/members/yanghyeyeong.jpg
+- name: 권정빈
+  instrument: Viola
+  role: 단원
+  education:
+  - 한국예술종합학교 예술전문사 졸업
+  - 중앙대학교 졸업
+  - 충남예술고등학교 졸업
+  concours: []
+  experience:
+  - 국립심포니오케스트라 객원단원
+  current: []
+  image: /assets/images/members/gweonjeongbin.jpg
+- name: 이유진
+  instrument: Piano
+  role: 단원
+  education:
+  - 선화예고 졸업
+  - 이화여대 학사, 석사 졸업
+  concours: []
+  experience: []
+  current: []
+  image: /assets/images/members/iyujin.jpg
+- name: 김혜지
+  instrument: Violin
+  role: 단원
+  education:
+  - 프라이부르크 음악대학교 석사
+  - 숙명여자대학교 학사 졸업
+  - 대전예술고등학교 졸업
+  - 대전예술의전당 영재 아카데미 수료
+  concours: []
+  experience:
+  - 하이델베르크 극장 오케스트라 인턴 단원
+  - 괴팅겐 심포니 오케스트라 인턴 단원
+  - 바덴바덴 필하모니 오케스트라 객원 단원
+  - 안디뮤지크 필하모니 협연
+  - 프라임 필하모닉 오케스트라 객원 단원
+  - 헤이리 심포니 오케스트라 객원 단원
+  current: []
+  image: /assets/images/members/gimhyeji.jpg
