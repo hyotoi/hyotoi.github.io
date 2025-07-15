@@ -1,27 +1,26 @@
-# Minimal Mistakes remote theme starter
+# 📚 목차
 
-Click [**Use this template**](https://github.com/mmistakes/mm-github-pages-starter/generate) button above for the quickest method of getting started with the [Minimal Mistakes Jekyll theme](https://github.com/mmistakes/minimal-mistakes).
+- [공통 가이드](#공통-가이드)
+  - 홈페이지 구조 이해
+  - 컨텐츠 수정 방법
+  - 컨텐츠 반영/배포 방법
 
-Contains basic configuration to get you a site with:
+- [메뉴별 작성법](#메뉴별-작성법)
+  - [소개](#소개)
+    - 비전
+    - 인사말
+    - 단원소개
+  - [공연안내](#공연안내)
+    - 공연 일정
+    - 지난 공연
+  - [미디어](#미디어)
+    - 공연 사진
+    - 공연 영상
+    - 언론보도
+  - [고객지원](#고객지원)
+    - 문의하기
+    - 공지사항
 
-- Sample posts.
-- Sample top navigation.
-- Sample author sidebar with social links.
-- Sample footer links.
-- Paginated home page.
-- Archive pages for posts grouped by year, category, and tag.
-- Sample about page.
-- Sample 404 page.
-- Site wide search.
-
-Replace sample content with your own and [configure as necessary](https://mmistakes.github.io/minimal-mistakes/docs/configuration/).
-
----
-
-## Troubleshooting
-
-If you have a question about using Jekyll, start a discussion on the [Jekyll Forum](https://talk.jekyllrb.com/) or [StackOverflow](https://stackoverflow.com/questions/tagged/jekyll). Other resources:
-
-- [Ruby 101](https://jekyllrb.com/docs/ruby-101/)
-- [Setting up a Jekyll site with GitHub Pages](https://jekyllrb.com/docs/github-pages/)
-- [Configuring GitHub Metadata](https://github.com/jekyll/github-metadata/blob/master/docs/configuration.md#configuration) to work properly when developing locally and avoid `No GitHub API authentication could be found. Some fields may be missing or have incorrect data.` warnings.
+- [부록](#부록)
+  - 자주 묻는 질문
+  - 참고 자료

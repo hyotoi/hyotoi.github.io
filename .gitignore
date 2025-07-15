@@ -5,3 +5,5 @@ Gemfile.lock
 .jekyll-cache
 .bundle
 node_modules
+ignore
+out.txt
