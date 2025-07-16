@@ -29,7 +29,10 @@ jobs:
             echo "✅ No content changes. Skipping commit."
             exit 0
           fi
-
+      - name: Set GitHub remote with token
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          
       - name: Commit and Push changes
         run: |
           git commit -m "🔄 Sync from muse_profile release"
