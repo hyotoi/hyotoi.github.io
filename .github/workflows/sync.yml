@@ -12,7 +12,7 @@ jobs:
         run: git clone https://github.com/ehdwn1991/muse_profile.git source
 
       - name: Rsync files (excluding .git)
-        run: rsync -av --delete --exclude='.git' source/ ./
+        run: rsync -av --delete --delay-updates --temp-dir=/tmp --exclude='.git' source/ ./
 
       - name: Check if content changed
         run: |
