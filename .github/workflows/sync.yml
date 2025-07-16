@@ -1,0 +1,30 @@
+name: Sync from muse_profile
+
+on:
+  repository_dispatch:
+    types: [sync_triggered]  # A 저장소에서 보내는 이벤트 이름과 일치해야 함
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone muse_profile
+        run: git clone https://github.com/ehdwn1991/muse_profile.git source
+
+      - name: Rsync files (excluding .git)
+        run: rsync -av --delete --exclude='.git' source/ ./
+
+      - name: Check if content changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          if git diff --cached --quiet; then
+            echo "✅ No content changes. Skipping commit."
+            exit 0
+          fi
+
+      - name: Commit and Push changes
+        run: |
+          git commit -m "🔄 Sync from muse_profile release"
+          git push origin HEAD:main
