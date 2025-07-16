@@ -2,7 +2,7 @@ name: Sync from muse_profile
 
 on:
   repository_dispatch:
-    types: [sync_triggered]  # A 저장소에서 보내는 이벤트 이름과 일치해야 함
+    types: [sync_triggered]
 
 jobs:
   sync:
@@ -11,13 +11,19 @@ jobs:
       - name: Clone muse_profile
         run: git clone https://github.com/ehdwn1991/muse_profile.git source
 
-      - name: Rsync files (excluding .git)
-        run: rsync -av --delete --delay-updates --temp-dir=/tmp --exclude='.git' source/ ./
+      - name: Copy files from source (excluding .git)
+        run: |
+          shopt -s dotglob
+          cp -r source/* .
+          cp -r source/.[!.]* . || true  # 숨김 파일 복사 (.jekyll-cache 등)
 
-      - name: Check if content changed
+      - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check if content changed
+        run: |
           git add .
           if git diff --cached --quiet; then
             echo "✅ No content changes. Skipping commit."
