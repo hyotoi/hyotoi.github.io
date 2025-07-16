@@ -1,0 +1,16 @@
+name: Trigger hyotoi Sync
+
+on:
+  release:
+    types: [published]  # 릴리즈가 퍼블리시 되었을 때만 실행
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch to hyotoi.github.io
+        run: |
+          curl -X POST https://api.github.com/repos/hyotoi/hyotoi.github.io/dispatches \
+            -H "Authorization: Bearer ${{ secrets.HYOTOI_PAT }}" \
+            -H "Accept: application/vnd.github+json" \
+            -d '{"event_type":"sync_triggered"}'
