@@ -43,9 +43,12 @@
 
 .member-info {
   text-align: center;
+  display: flex;
+  gap: 0.25rem;
   font-size: 0.9rem;
   margin-top: 0.5rem;
   line-height: 1.2;
+  align-items: baseline;
 }
 
 .member-name {

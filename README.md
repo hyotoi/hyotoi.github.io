@@ -42,3 +42,26 @@
         ↓
    publishing_page.yml → sync.yml 성공 시 배포 수행
 ```
+
+
+## Release
+
+```shell
+docker create --name sshon_node node:lts-alpine3.21
+docker cp ~/.ssh sshon_node:/root/
+docker run  -itd --name generate_release -v /home/codex/git/personal/muse_profile:/srv/jekyll -v /home/codex/.ssh:/root/.ssh --entrypoint /bin/sh node:lts-alpine3.21
+
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/config
+chown root:root ~/.ssh ~/.ssh/*
+
+apk add git openssh-client
+git config --global --add safe.directory /srv/jekyll
+cd /srv/jekyll
+npm install --save-dev release-it @release-it/conventional-changelog
+npm install --save-dev conventional-changelog-cli
+npx release-it
+npx conventional-changelog -p conventionalcommits -r 0 --from v1.2.0 --to v1.3.0 > relese_out.txt
+npx conventional-changelog -p conventionalcommits -r 0 --from v0.0.1 --to v0.1.1 
+
+```

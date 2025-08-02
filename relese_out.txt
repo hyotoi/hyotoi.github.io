@@ -1,0 +1,92 @@
+## [0.1.2](///compare/v0.1.1...v0.1.2) (2025-07-16)
+
+### Bug Fixes
+
+* rsync 중 일부 파일 누락 방지 처리 추가 739e7ed
+## [0.1.1](///compare/v0.1.0...v0.1.1) (2025-07-16)
+
+### Features
+
+* **data:** 오케스트라 단원 프로필 데이터를 상세 형식으로 전면 개편 3d9655b
+* **profile:** 단원 팝업에 학력, 수상, 경력, 현재 활동 섹션 구조 추가 229de26
+* **script:** Excel 기반 단원 데이터 → YAML 변환 자동화 스크립트 추가 c0860da
+* **workflow:** 릴리즈 발생 시 dispatch 트리거 워크플로우 추가 f07b02a
+
+### Bug Fixes
+
+* **contact:** Formspree 액션 URL 최신 토큰으로 교체 7dfb51a
+## [0.1.0](///compare/v0.0.13...v0.1.0) (2025-07-05)
+
+### Features
+
+* 공지사항 페이지 테이블 및 페이지네이션 기능 구현 5e5d458
+* 언론보도(news) 페이지 및 스타일 추가 badc974
+
+### Bug Fixes
+
+* deploy Job 의존성 이름 오타 수정 a20378f
+* github-metadata 플러그인 리포지토리 정보 인식 오류 수정 c4601fc
+* PAGES_REPO_NWO 영향으로 잘못 생성되던 URL 수정 4b41541
+## [0.0.13](///compare/v0.0.12...v0.0.13) (2025-07-03)
+
+### Features
+
+* 공연 사진/영상 페이지에 갤러리 및 유튜브 영상 블록 구현 9299a20
+* 문의 페이지에 Formspree 기반 연락 폼 추가 및 스타일 구현 3ee6c89
+## [0.0.12](///compare/v0.0.11...v0.0.12) (2025-07-03)
+
+### Features
+
+* **ci:** GitHub Actions에 멀티 아키텍처 이미지 빌드/배포 워크플로 추가 fd2093f
+## [0.0.11](///compare/v0.0.10...v0.0.11) (2025-07-03)
+
+### Features
+
+* **ci:** amd64/arm64 멀티 아키텍처 Docker 이미지 빌드 및 푸시 지원 33280b1
+## [0.0.10](///compare/v0.0.9...v0.0.10) (2025-06-30)
+
+### Bug Fixes
+
+* CI에서 auto_update_all_galleries.py 경로 오류 수정 596de37
+## [0.0.9](///compare/v0.0.8...v0.0.9) (2025-06-30)
+
+### Features
+
+* 공연 포스트 갤러리 자동 갱신 및 공연 사진 페이지 완성 50f2ab9
+## [0.0.8](///compare/v0.0.7...v0.0.8) (2025-06-30)
+
+### Bug Fixes
+
+* 공연 페이지네이션 링크 출력 시 범위 벗어남 문제 수정 bfe969f
+## [0.0.7](///compare/v0.0.6...v0.0.7) (2025-06-30)
+
+### Features
+
+* **concert:** 공연 포스트 전용 페이지 및 커스텀 페이지네이션 기능 추가 196f1d5
+## [0.0.6](///compare/v0.0.5...v0.0.6) (2025-06-27)
+## [0.0.5](///compare/v0.0.4...v0.0.5) (2025-06-27)
+
+### Bug Fixes
+
+* members.css 404 오류 해결을 위한 Sass 구조로 통합 37aa8fb
+## [0.0.4](///compare/v0.0.3...v0.0.4) (2025-06-27)
+
+### Bug Fixes
+
+* **entrypoint:** syntax error 수정 (unexpected EOF) cb2e371
+## [0.0.3](///compare/v0.0.2...v0.0.3) (2025-06-27)
+
+### Bug Fixes
+
+* **entrypoint:** production 모드에서 entr 제거하여 Render TTY 에러 해결 2b3ee08
+## [0.0.2](///compare/v0.0.1...v0.0.2) (2025-06-27)
+## [0.0.1](///compare/e3e9238b7de91142f4b28884f252f4b317666240...v0.0.1) (2025-06-27)
+
+### Features
+
+* **nav:** 다단 드롭다운 메뉴 기능 추가 및 스타일 개선 e3e9238
+* **profile:** 단원 소개 페이지 갤러리 및 프로필 팝업 기능 구현 1077c88
+
+### Bug Fixes
+
+* **pagination:** 페이지별로 pagination 비활성화 가능하도록 조건 추가 f7ae74d

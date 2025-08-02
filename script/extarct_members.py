@@ -5,11 +5,9 @@ import re
 from unidecode import unidecode
 from PIL import Image
 from openpyxl import load_workbook
-from openpyxl.drawing.image import Image as XLImage
 from io import BytesIO
 
-
-# 악기 약어 변환 (대소문자 구분 X)
+# 🎼 악기 약어 변환
 instrument_map = {
     "fl": "Flute",
     "cl": "Clarinet",
@@ -34,74 +32,79 @@ instrument_map = {
     "bsn": "Bassoon",
 }
 
-# 슬러그용 영문 이름 생성
 def slugify(korean_name):
     return unidecode(korean_name).lower().replace(" ", "")
 
-
-# <...> → 『...』로 변환
 def clean_html_like_tags(text):
     return re.sub(r'<([^<>]+)>', r'『\1』', text)
 
-# 줄 나누기 (newline 기준만 사용)
 def split_lines(cell):
     if pd.isna(cell):
         return []
     lines = re.split(r'[\r\n]+', str(cell))
     return [clean_html_like_tags(line.strip()) for line in lines if line.strip()]
 
+def extract_instrument_and_role(value):
+    if pd.isna(value):
+        return "", ""
+    val = str(value).strip().lower().replace(" ", "")
+    match = re.match(r'([a-z]+)(.+)?', val)
+    if match:
+        instr = match.group(1)
+        role = match.group(2) if match.group(2) else "단원"
+        return instrument_map.get(instr, instr), role
+    return value, "단원"
 
-# Excel + 이미지 포함 처리
+# 🔧 파일 경로 설정
 xlsx_path = "ignore/members.xlsx"
 image_output_dir = "assets/images/members"
+yaml_path = "_data/members.yml"
 os.makedirs(image_output_dir, exist_ok=True)
 
-# 워크북 로딩 (이미지 포함용)
+# 📖 워크북 로딩
 wb = load_workbook(xlsx_path)
 ws = wb.active
 
-# 이미지 맵핑 (좌표 기준)
+# 🖼 이미지 좌표 맵
 img_map = {}
 for image in ws._images:
-    row = image.anchor._from.row + 1  # openpyxl의 row index는 0-based
+    row = image.anchor._from.row + 1
     img_map[row] = image
 
-# 데이터프레임 로딩 (pandas)
+# 📊 엑셀 데이터 로딩
 df = pd.read_excel(xlsx_path)
 df.columns = [col.strip() for col in df.columns]
 
-# YAML 변환
 yaml_data = []
 
 for idx, row in df.iterrows():
     korean_name = str(row.get("이름", "")).strip()
     eng_name = slugify(korean_name)
+    row_num = idx + 2
 
-    #     row_num = idx + 2  # openpyxl은 1-index + header 고려
+    # 이미지 저장
     image_path = f"{image_output_dir}/{eng_name}.jpg"
-
     if row_num in img_map:
         pil_img = img_map[row_num]._data()
         if isinstance(pil_img, bytes):
             try:
-                img = Image.open(BytesIO(pil_img)).convert("RGB")  # RGBA → RGB 변환
+                img = Image.open(BytesIO(pil_img)).convert("RGB")
                 img.save(image_path)
                 print(f"🖼️ 이미지 저장 완료: {image_path}")
             except Exception as e:
                 print(f"❌ 이미지 저장 실패: {eng_name} - {e}")
-        else:
-            print(f"⚠️ 이미지 데이터가 bytes가 아님: {eng_name}")
     else:
         print(f"⚠️ 이미지 없음: {korean_name}")
 
-    # (대소문자 무시)
-    raw_instr = str(row.get("악기", "")).strip().lower()
-    instrument = instrument_map.get(raw_instr, raw_instr)
+    # 악기/직책 분리
+    instrument_raw = row.get("악기", "")
+    instrument, role = extract_instrument_and_role(instrument_raw)
 
     member = {
+        "order": idx + 1,
         "name": korean_name,
         "instrument": instrument,
-        "role": "단원",
+        "role": role,
         "education": split_lines(row.get("학력")),
         "concours": split_lines(row.get("수상내역")),
         "experience": split_lines(row.get("경력")),
@@ -111,8 +114,7 @@ for idx, row in df.iterrows():
 
     yaml_data.append(member)
 
-# YAML 파일로 저장
-yaml_path = "_data/members.yml"
+# YAML 저장
 with open(yaml_path, "w", encoding="utf-8") as f:
     yaml.dump(yaml_data, f, allow_unicode=True, sort_keys=False)
 

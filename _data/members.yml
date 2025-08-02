@@ -1,21 +1,5 @@
-- name: 장경은
-  instrument: Cello
-  role: 단원
-  education:
-  - 경기예술고등학교 수석입학 및 졸업
-  - 이화여대 관현악과 졸업
-  - 이화여대 음악학부 석사 수료
-  concours:
-  - 음악교육신문사 콩쿨 1위없는 2위
-  - 코리아 솔로이스츠 오케스트라 콩쿨 1위
-  - 코리아 솔로이스츠 오케스트라 유망 신예 음악회 협연
-  - 이원 꿈나무 콘서트 독주회
-  - 이화여대 실내악콩쿨 1위
-  experience:
-  - 부천필하모닉오케스트라, 전주시향, 서초교향악단, 한경아르떼필하모닉오케스트라,심포니송, 위필하모닉 객원
-  current: []
-  image: /assets/images/members/janggyeongeun.jpg
-- name: 오지홍
+- order: 1
+  name: 오지홍
   instrument: Violin
   role: 단원
   education:
@@ -44,7 +28,8 @@
   - 플래직 오케스트라 제 1 바이올린 수석 객원
   - 성남시향, 디토 오케스트라, TIMF 통영국제음악재단 오케스트라 객원
   image: /assets/images/members/ojihong.jpg
-- name: 조하영
+- order: 2
+  name: 조하영
   instrument: Cello
   role: 단원
   education:
@@ -59,9 +44,10 @@
   current:
   - 심포니송, 한경arte, 강릉 시향 등 객원
   image: /assets/images/members/johayeong.jpg
-- name: 최유나
+- order: 3
+  name: 최유나
   instrument: Flute
-  role: 단원
+  role: 수석
   education:
   - 선화예술학교, 선화예술고등학교 졸업
   - 이화여자대학교 학사, 석사 졸업
@@ -85,34 +71,10 @@
   current:
   - 한경 arte 단원
   image: /assets/images/members/coeyuna.jpg
-- name: 공원경
-  instrument: Piano
-  role: 단원
-  education:
-  - 경기예술고등학교 영재원 수료
-  - 경기예술고등학교 졸업
-  - 이화여자대학교 학사 및 석사 졸업
-  - 독일 만하임 국립음대 반주과석사 및 기악
-  - 반주 최고연주자과정 만장일치 만점 졸업
-  concours:
-  - 이화여자대학교 실기 우수자 연주회 및 대학원 연주회
-  - 부천음협콩쿠르 1위
-  - 한음콩쿠르 2위,
-  - 음악교육신문사 콩쿠르 3위
-  - 이화 실내악 콩쿠르 3위
-  - International Music Competition 'Brussels' Grand Prize Virtuoso 실내악 부문 1위
-  experience:
-  - Heidelberg Musik Festival 연주
-  - Mannheimer Schloss Rittersaal 연주
-  - Junge Deutsche Philharmonie Probespiel Tuba 부문 공식 반주자 역임
-  - 독일 만하임 국립음대 반주조교 역임
-  - 곤지암 플루트 페스티벌 공식 반주자 역임
-  current:
-  - 한국반주협회 회원
-  image: /assets/images/members/gongweongyeong.jpg
-- name: 변주원
+- order: 4
+  name: 변주원
   instrument: Clarinet
-  role: 단원
+  role: 수석
   education:
   - 독일 뮌스터 국립음대 심사위원 만장일치(최고점 전체수석 입학 및 졸업)
   concours: []
@@ -127,7 +89,8 @@
   - 클라리넷 앙상블 휘 리더
   - 서울그랜드필하모닉 오케스트라 수석
   image: /assets/images/members/byeonjuweon.jpg
-- name: 현수진
+- order: 5
+  name: 현수진
   instrument: Viola
   role: 단원
   education:
@@ -140,11 +103,12 @@
   - 전주 글로리아 스트링 오케스트라 객원수석 역임
   - 한경 arte 필하모닉, 통영국제음악제 페스티벌오케스트라 객원 역임
   current:
-  - 현 Ensembl:e, 전주챔버오케스트라 단원 및 전주시립교향악단 상임단원
+  - Ensembl:e, 전주챔버오케스트라 단원 및 전주시립교향악단 상임단원
   image: /assets/images/members/hyeonsujin.jpg
-- name: 임지수
+- order: 6
+  name: 임지수
   instrument: Violin
-  role: 단원
+  role: 악장
   education:
   - 쾰른 국립음대 학사 과정 최고점 졸업
   - 쾰른 국립음대 석사 과정 최고점 졸업
@@ -170,7 +134,8 @@
   - 계원예고 콩쿨, National Youth Instrumental Music
   - Competition 심사위원 위촉
   image: /assets/images/members/imjisu.jpg
-- name: 황예찬
+- order: 7
+  name: 황예찬
   instrument: Violin
   role: 단원
   education:
@@ -190,7 +155,8 @@
   - 천안시립교향악단 단원
   - 인천학생교육문화회관출강
   image: /assets/images/members/hwangyecan.jpg
-- name: 김민진
+- order: 8
+  name: 김민진
   instrument: Cello
   role: 단원
   education:
@@ -211,7 +177,8 @@
   - Want Duo, 트리오 디어 첼리스트
   - 곽재선 문화재단 KG 필하모닉 단원
   image: /assets/images/members/gimminjin.jpg
-- name: 조재민
+- order: 9
+  name: 조재민
   instrument: Clarinet
   role: 단원
   education:
@@ -222,7 +189,8 @@
   experience: []
   current: []
   image: /assets/images/members/jojaemin.jpg
-- name: 윤치원
+- order: 10
+  name: 윤치원
   instrument: Piano
   role: 단원
   education:
@@ -238,7 +206,8 @@
   - 전 리스트 피아노 스튜디오 대표
   current: []
   image: /assets/images/members/yunciweon.jpg
-- name: 장희영
+- order: 11
+  name: 장희영
   instrument: Violin
   role: 단원
   education:
@@ -259,7 +228,8 @@
   - 음악제작 채널 '음악서재[Heeing's Music diary] 운영
   current: []
   image: /assets/images/members/janghyiyeong.jpg
-- name: 민서영
+- order: 12
+  name: 민서영
   instrument: bn
   role: 단원
   education:
@@ -274,7 +244,8 @@
   - KG필하모닉 창단 단원
   current: []
   image: /assets/images/members/minseoyeong.jpg
-- name: 김예원
+- order: 13
+  name: 김예원
   instrument: Violin
   role: 단원
   education:
@@ -288,7 +259,8 @@
   - 모테트 챔버, 이화필하모닉오케스트라, 밀레니엄심포니 단원
   current: []
   image: /assets/images/members/gimyeweon.jpg
-- name: 양혜영
+- order: 14
+  name: 양혜영
   instrument: Harp
   role: 단원
   education:
@@ -302,7 +274,8 @@
   - 수원시향, 전주시향, 강릉시향, 창원시향, 광주시향, 울산시향 등 다수 오케스트라 객원 및 객원 수석
   current: []
   image: /assets/images/members/yanghyeyeong.jpg
-- name: 권정빈
+- order: 15
+  name: 권정빈
   instrument: Viola
   role: 단원
   education:
@@ -314,7 +287,8 @@
   - 국립심포니오케스트라 객원단원
   current: []
   image: /assets/images/members/gweonjeongbin.jpg
-- name: 이유진
+- order: 16
+  name: 이유진
   instrument: Piano
   role: 단원
   education:
@@ -324,7 +298,8 @@
   experience: []
   current: []
   image: /assets/images/members/iyujin.jpg
-- name: 김혜지
+- order: 17
+  name: 김혜지
   instrument: Violin
   role: 단원
   education:
@@ -342,3 +317,51 @@
   - 헤이리 심포니 오케스트라 객원 단원
   current: []
   image: /assets/images/members/gimhyeji.jpg
+- order: 18
+  name: 정두웅
+  instrument: Double Bass
+  role: 수석
+  education:
+  - 서울대 재학중 도영
+  - 영국 길드홀 음악연극학교 최우수 졸업(전액/생활비장학)
+  - 미국 텍사스 어스틴 주립대학교
+  - 석사 졸업 및 동대 박사 과정중 귀국(전액/생활장학금)
+  concours:
+  - 충남대학교 강사 역임
+  - UT Austin 현악콩쿨 1위 및 협연
+  - Austin Civic Orchestra 주최 오디션 발탁 및 협연
+  experience:
+  - 현)서울대학교,서울예고,계원예고 출강 및 빈 앙상블, 에츠하임 앙상블 단원, 코리안 크리스천 필하모닉, 오케스트라 디 오리지널 수석
+  - 서울시립 교향악단 단원역임
+  - 서울시 유스 오케스트라 단원 및 부수석
+  - 강남 심포니 객원 수석
+  - 천안시립 교향악단 객원 수석
+  - 원주시립 교향악단 객원 부수석
+  - 서초오케스트라 객원 수석
+  - 프라임 필하모닉 오케스트라 객원 수석
+  - 부천시립 교향악단, 청주시립 교향악단, 목포시립 교향악단, 객원 단원
+  current: []
+  image: /assets/images/members/jeongduung.jpg
+- order: 19
+  name: 김효정
+  instrument: Double Bass
+  role: 단원
+  education:
+  - 이화여자대학교 학사 졸업
+  - 독일 쾰른음대 (Hochschüle für Musik und Tanz köln) 석사 졸업
+  concours: []
+  experience:
+  - 음악춘추 우수신인데뷔 음악회
+  - 이화여자대학교 오케스트라 협연
+  - 독일 쾰른음대 콩쿨2위
+  - 독일 International junge orchesterakademie 수료
+  - 전주챔버오케스트라 협연
+  - Fanny Mendelssohn International Online Competition 2024 absolute first prize
+  - 군포프라임필하모닉 오케스트라 객원수석, DCMF(대전국제음악제 페스티벌오케스트라)객원수석, 카메라타 전남 객원수석, k-필하모닉 오케스트라
+    객원수석, 프리마아르스 오케스트라 객원수석
+  current:
+  - 전주시립교향악단 상임단원
+  - 라퓨즈플레이어즈 그룹, Korean Christian Philharmonic, 오케스트라 누오베 무지케 단원
+  - 유니버셜 필하모닉 부수석
+  - 라네스 앙상블 부수석
+  image: /assets/images/members/gimhyojeong.jpg

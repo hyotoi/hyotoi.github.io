@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^10.0.1",
+    "conventional-changelog-cli": "^5.0.0",
+    "release-it": "^19.0.3"
+  },
+  "version": "0.1.2"
+}

@@ -8,7 +8,7 @@ pagination: false
 # 🎯 오케스트라 단원 소개
 
 <!-- <link rel="stylesheet" href="{{ '/assets/css/members.css' | relative_url }}"> -->
-
+{% assign sorted_members = site.data.members | sort: "order" %}
 <div class="member-gallery">
   {% for member in site.data.members %}
     <div class="member-card" onclick="togglePopup(this)">
@@ -17,7 +17,7 @@ pagination: false
       </div>
       <div class="member-info">
         <div class="member-name">{{ member.name }}</div>
-        <div class="member-instrument">{{ member.instrument | default: member.instruments }}</div>
+        <div class="member-instrument">{{ member.instrument | default: member.instruments }} </div>
         <div class="member-role">({{ member.role | default: "단원" }})</div>
       </div>
 
