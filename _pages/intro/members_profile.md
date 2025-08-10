@@ -1,5 +1,6 @@
 ---
 title: "단원 소개"
+hide_title: true
 permalink: /intro/members_profile/
 layout: single
 pagination: false
