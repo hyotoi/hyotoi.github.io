@@ -36,4 +36,4 @@ jobs:
       - name: Commit and Push changes
         run: |
           git commit -m "🔄 Sync from muse_profile release"
-          git push origin HEAD:master
+          git pull origin master --rebase || true
