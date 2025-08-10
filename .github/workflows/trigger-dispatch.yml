@@ -3,9 +3,22 @@ name: Trigger hyotoi Sync
 on:
   release:
     types: [published]  # 릴리즈가 퍼블리시 되었을 때만 실행
+  
+  push:
+    branches:
+      - '**'      # 모든 브랜치
+    tags:
+      - '*'       # 모든 태그
+  # Create event (GitHub UI에서 태그만 생성해도 잡 작동)
+  create: {}
+
+  workflow_dispatch:
+
 
 jobs:
   dispatch:
+    # create 이벤트일 땐 'tag'가 만들어진 경우에만 실행
+    if: github.event_name != 'create' || github.ref_type == 'tag'
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch to hyotoi.github.io
