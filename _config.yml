@@ -13,15 +13,16 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Muse Profile
+title: Klang
 email: klang.theworld@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   음악악단 소개글.
-twitter_username: username
-github_username: username
+# twitter_username: username
+instagram_username: klang_official
+# github_username: username
 minimal_mistakes_skin: air
 search: true
-url: "https://your-github-id.github.io"
+url: "https://hyotoi.github.io"
 baseurl: "" # Don't edit this
 # Build settings
 markdown: kramdown
@@ -58,36 +59,40 @@ plugins:
   - jekyll-include-cache
 
 author:
-  name   : "klang.theworld"
+  # name   : "klang.theworld"
   # 악단 대표 이미지
-  avatar : "/assets/images/bio-photo.jpg"
+  avatar : "/assets/images/bi/main-bi.png"
   # 악단 간단 소개
-  bio    : "My awesome biography constrained to a sentence or two goes here."
+  bio: >-
+    Klang,
+    Music for everyone.
   links:
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
-      url: "https://"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+      url: "https://instagram.com/klang_official"
+
+    # - label: "Website"
+    #   icon: "fas fa-fw fa-link"
+    #   url: "https://"
+    # - label: "Twitter"
+    #   icon: "fab fa-fw fa-twitter-square"
+    #   url: "https://twitter.com/"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/hyotoi/hyotoi.github.io"
 
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
+    # - label: "Twitter"
+    #   icon: "fab fa-fw fa-twitter-square"
+    #   url: "https://twitter.com/"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+      url: "https://instagram.com/klang_official"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/hyotoi/hyotoi.github.io"
+
 
 defaults:
   # _posts

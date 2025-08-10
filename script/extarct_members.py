@@ -30,6 +30,7 @@ instrument_map = {
     "timp": "Timpani",
     "euph": "Euphonium",
     "bsn": "Bassoon",
+    "bn": "Bassoon",
 }
 
 def slugify(korean_name):
