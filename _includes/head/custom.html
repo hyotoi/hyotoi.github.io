@@ -3,3 +3,77 @@
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 
 <!-- end custom head snippets -->
+<!-- 테스트 편의용: 한 파일에 CSS+JS -->
+<style>
+/* === 공통: 언제나 오버레이 레이아웃 보유 (보이기/숨기기만 미디어쿼리로) === */
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  transform: translateY(100%);
+  transition: transform .10s ease-out;  /* ⬅ 전환 시간 단축: 0.25s → 0.16s */
+  will-change: transform;               /* GPU 가속 힌트 */
+  backface-visibility: hidden;          /* 렌더링 최적화 */
+  z-index: 9999;
+  display: none; /* 기본은 숨김 */
+  flex-direction: column;
+}
+
+/* 모션 줄임 환경에서는 애니메이션 제거 */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav {
+    transition: none;
+  }
+}
+
+.mobile-nav.is-open { transform: translateY(0); }
+
+/* 리스트/링크 공통 리셋(불릿 제거 등) */
+.mobile-nav__list,
+.mobile-nav__submenu { list-style: none !important; margin: 0; padding: 0; }
+.mobile-nav__header {
+  height: 56px; display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 12px; border-bottom: 1px solid #eee;
+}
+.mobile-nav__close { font-size: 24px; background: none; border: 0; padding: 8px; }
+.mobile-nav__body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.mobile-nav__list { padding: 12px 16px 40px; }
+.mobile-nav__item { margin: 0; }
+.mobile-nav__link,
+.mobile-nav__parent {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; text-align: left;
+  padding: 14px 4px; font-size: 18px;
+  border: 0; background: none; color: inherit; text-decoration: none;
+}
+.mobile-nav__parent .chev { transition: transform .2s ease; }
+.mobile-nav__parent.is-open .chev { transform: rotate(180deg); }
+.mobile-nav__submenu { display: none; padding-left: 12px; }
+.mobile-nav__submenu a { display: block; padding: 10px 0; font-size: 16px; color: #333; text-decoration: none; }
+
+/* 햄버거 버튼: 기본 숨김(데스크톱), 위치는 헤더 우측 가정 */
+.mobile-nav__open {
+  display: none; position: absolute; right: 12px; top: 10px;
+  background: transparent; border: 0; font-size: 24px; line-height: 1; padding: 8px;
+  z-index: 1100;
+}
+
+/* === 입력 방식으로 분기 (태블릿 포함 터치=모바일 메뉴) === */
+@media (hover: none), (pointer: coarse) {
+  .mobile-nav { display: flex !important; }
+  .mobile-nav__open { display: block !important; }
+  .greedy-nav .visible-links,
+  .greedy-nav .search__toggle { display: none !important; } /* 데스크톱 메뉴 숨김 */
+}
+
+/* === 마우스/트랙패드 환경은 데스크톱 메뉴 유지 === */
+@media (hover: hover) and (pointer: fine) {
+  .mobile-nav,
+  .mobile-nav__open { display: none !important; }
+  .greedy-nav .visible-links { display: flex !important; }
+}
+
+/* 배경 스크롤 잠금 */
+.body-locked { overflow: hidden; touch-action: none; }
+
+</style>

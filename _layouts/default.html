@@ -8,10 +8,12 @@
     {% include head.html %}
     {% include head/custom.html %}
   </head>
-
+  
   <body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}" dir="{% if site.rtl %}rtl{% else %}ltr{% endif %}">
     {% include_cached skip-links.html %}
     {% include_cached masthead.html %}
+    <!-- 헤더 바로 뒤에 모바일 메뉴 DOM 주입 -->
+    {% include mobile-menu.html %}
 
     <div class="initial-content">
       {{ content }}

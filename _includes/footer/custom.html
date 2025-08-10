@@ -1,3 +1,66 @@
 <!-- start custom footer snippets -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const $open  = document.querySelector('.mobile-nav__open');
+  const $nav   = document.getElementById('mobileNav');
+  const $close = $nav ? $nav.querySelector('.mobile-nav__close') : null;
+
+  // ✅ 터치 판별을 이중으로 (매치미디어 + 실제 터치 포인트)
+  const mqTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  const realTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+
+  // 데스크톱(진짜 터치 없음)에서는 모바일 메뉴 로직 자체를 끔
+  if (!(mqTouch && realTouch)) return;
+
+  if (!$open || !$nav || !$close) return;
+
+  const NAV_ANIM_MS = 180;
+
+  $nav.style.display = 'none';
+
+  const openNav = () => {
+    $nav.style.display = 'flex';
+    requestAnimationFrame(() => {
+      $nav.classList.add('is-open');
+      document.body.classList.add('body-locked');
+      $open.setAttribute('aria-expanded', 'true');
+    });
+  };
+
+  const closeNav = () => {
+    $nav.classList.remove('is-open');
+    document.body.classList.remove('body-locked');
+    $open.setAttribute('aria-expanded', 'false');
+    const onEnd = () => { $nav.style.display = 'none'; $nav.removeEventListener('transitionend', onEnd); };
+    $nav.addEventListener('transitionend', onEnd);
+    setTimeout(onEnd, NAV_ANIM_MS);
+  };
+
+  $open.addEventListener('click', openNav);
+  $close.addEventListener('click', closeNav);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
+
+  // 아코디언
+  $nav.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-accordion]');
+    if (!btn) return;
+    const submenu = btn.parentElement.querySelector('.mobile-nav__submenu');
+    const isOpen = btn.classList.contains('is-open');
+    btn.classList.toggle('is-open', !isOpen);
+    if (submenu) submenu.style.display = isOpen ? 'none' : 'block';
+  });
+
+  // 링크 클릭: 닫으면서 이동 (모바일에서만 실행됨)
+  $nav.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    if (a.target === '_blank' || a.hasAttribute('download')) return;
+    e.preventDefault();
+    closeNav();
+    setTimeout(() => { window.location.href = a.href; }, 80);
+  });
+});
+</script>
+
 
 <!-- end custom footer snippets -->
