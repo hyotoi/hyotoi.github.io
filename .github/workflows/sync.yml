@@ -7,33 +7,64 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # GITHUB_TOKEN으로 push 허용
+
     steps:
-      - name: Clone muse_profile
-        run: git clone https://github.com/ehdwn1991/muse_profile.git source
+      # 1) B 저장소(현재 repo) 체크아웃
+      - name: Checkout target repo (hyotoi.github.io)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Copy files from source (excluding .git)
+      # 2) A 저장소를 remote로 추가하고 fetch (태그 포함)
+      - name: Add source remote and fetch
         run: |
-          shopt -s dotglob
-          cp -r source/* .
-          cp -r source/.[!.]* . || true  # 숨김 파일 복사 (.jekyll-cache 등)
+          set -euo pipefail
+          git remote add source https://github.com/ehdwn1991/muse_profile.git
+          git fetch --tags source
 
-      - name: Configure Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # A 저장소의 기본 브랜치 자동 감지 (source/HEAD → 브랜치명)
+          git remote set-head source -a || true
+          SRC_DEFAULT="$(git rev-parse --abbrev-ref source/HEAD | sed 's|source/||' || echo main)"
+          echo "SRC_DEFAULT=${SRC_DEFAULT}" >> $GITHUB_ENV
+          echo "🔎 Source default branch: ${SRC_DEFAULT}"
 
-      - name: Check if content changed
+      # 3) 대상(B) 기본 브랜치 체크아웃
+      - name: Switch to target default branch
+        env:
+          TARGET_DEFAULT: ${{ github.event.repository.default_branch }}
         run: |
-          git add .
-          if git diff --cached --quiet; then
-            echo "✅ No content changes. Skipping commit."
-            exit 0
+          set -euo pipefail
+          BRANCH="${TARGET_DEFAULT:-main}"
+          echo "TARGET_DEFAULT=${BRANCH}" >> $GITHUB_ENV
+          echo "🔁 Checkout target branch: ${BRANCH}"
+          git checkout "${BRANCH}"
+
+      # 4) 병합 필요 여부 확인 (이미 포함되어 있으면 스킵)
+      - name: Skip if already up to date
+        run: |
+          set -euo pipefail
+          if git merge-base --is-ancestor "source/${SRC_DEFAULT}" HEAD; then
+            echo "✅ Already up to date. Skipping merge & push."
+            echo "SKIP_MERGE=1" >> $GITHUB_ENV
+          else
+            echo "SKIP_MERGE=0" >> $GITHUB_ENV
           fi
-      - name: Set GitHub remote with token
+
+      # 5) Merge (충돌 시 source 쪽 선호: -X theirs)
+      - name: Merge source into target
+        if: env.SKIP_MERGE == '0'
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          
-      - name: Commit and Push changes
+          set -euo pipefail
+          # 서로 다른 히스토리도 허용하고, 충돌 시 source(=theirs) 우선
+          git merge --no-edit --allow-unrelated-histories -X theirs "source/${SRC_DEFAULT}" \
+            || (echo "❌ Merge conflict. Please resolve manually."; exit 1)
+
+      # 6) 변경 사항이 있으면 push
+      - name: Push merge result
+        if: env.SKIP_MERGE == '0'
         run: |
-          git commit -m "🔄 Sync from muse_profile release"
-          git pull origin master --rebase || true
+          set -euo pipefail
+          git push origin "HEAD:${TARGET_DEFAULT}"
+          echo "🚀 Pushed merged changes to ${TARGET_DEFAULT}"
