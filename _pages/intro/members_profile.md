@@ -123,8 +123,17 @@ pagination: false
     }
   });
 
-  // 오버레이/닫기 버튼
-  panel.addEventListener('click', (e)=>{ if (e.target.matches('[data-close]')) closePanel(); });
+// 오버레이/닫기 버튼(터치/마우스 모두 대응)
+const onCloseTap = (e) => {
+  const closer = e.target.closest('[data-close]');
+  if (!closer) return;
+  e.preventDefault();
+  e.stopPropagation();
+  closePanel();
+};
+panel.addEventListener('click', onCloseTap);
+panel.addEventListener('pointerup', onCloseTap);   // iOS 터치 누락 방지
+panel.addEventListener('touchend', onCloseTap, { passive: false });
 
   // 모바일 스와이프-다운 닫기
   let startY=null;
