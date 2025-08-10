@@ -92,7 +92,7 @@ pagination: false
     body.innerHTML = sourceEl.innerHTML;
     panel.classList.add('is-open');
     panel.setAttribute('aria-hidden','false');
-    document.documentElement.classList.add('no-scroll');   // 스크롤 잠금
+    document.documentElement.classList.add('no-scroll');
     document.body.classList.add('modal-open');
     setTimeout(()=> panel.querySelector('.member-panel__close')?.focus(),0);
     document.addEventListener('keydown', onKeydown);
@@ -102,7 +102,7 @@ pagination: false
     panel.setAttribute('aria-hidden','true');
     body.innerHTML = '';
     document.removeEventListener('keydown', onKeydown);
-    document.documentElement.classList.remove('no-scroll'); // 스크롤 잠금 해제
+    document.documentElement.classList.remove('no-scroll');
     document.body.classList.remove('modal-open');
     if(lastFocus) lastFocus.focus();
   }
@@ -123,26 +123,77 @@ pagination: false
     }
   });
 
-// 오버레이/닫기 버튼(터치/마우스 모두 대응)
-const onCloseTap = (e) => {
-  const closer = e.target.closest('[data-close]');
-  if (!closer) return;
-  e.preventDefault();
-  e.stopPropagation();
-  closePanel();
-};
-panel.addEventListener('click', onCloseTap);
-panel.addEventListener('pointerup', onCloseTap);   // iOS 터치 누락 방지
-panel.addEventListener('touchend', onCloseTap, { passive: false });
+  // 닫기 버튼/오버레이 클릭
+  const onCloseTap = (e) => {
+    const closer = e.target.closest('[data-close]');
+    if (!closer) return;
+    e.preventDefault();
+    e.stopPropagation();
+    closePanel();
+  };
+  panel.addEventListener('click', onCloseTap);
+  panel.addEventListener('pointerup', onCloseTap);
+  panel.addEventListener('touchend', onCloseTap, { passive: false });
 
-  // 모바일 스와이프-다운 닫기
-  let startY=null;
-  panel.addEventListener('touchstart', e=>{ startY=e.touches[0].clientY; }, {passive:true});
-  panel.addEventListener('touchmove', e=>{
-    if(startY==null) return;
-    const dy = e.touches[0].clientY - startY;
-    const isMobile = matchMedia('(max-width: 767px)').matches;
-    if(isMobile && dy>80){ startY=null; closePanel(); }
+  // ===== 모바일 스와이프-다운 닫기(엄격 조건) =====
+  let startY=null, startX=null, startOnSheet=false, startInHeader=false, scrollTop0=0;
+  let bodyScroller=null;
+
+  panel.addEventListener('touchstart', (e)=>{
+    if (!panel.classList.contains('is-open')) return;
+
+    const sheet = e.target.closest('.member-panel__sheet');
+    const overlay = e.target.closest('.member-panel__overlay');
+
+    bodyScroller = panel.querySelector('.member-panel__body');
+
+    if (overlay) {
+      // 오버레이에서 시작: 그대로 허용(민감도는 아래에서 처리)
+      startOnSheet = false;
+    } else if (sheet) {
+      startOnSheet = true;
+      // 헤더 영역(타이틀/썸네일 부분)에서만 스와이프-닫기 허용
+      startInHeader = !!e.target.closest('.member-detail__header');
+      scrollTop0 = bodyScroller ? bodyScroller.scrollTop : 0;
+    } else {
+      startOnSheet = false;
+      startInHeader = false;
+    }
+    startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX;
   }, {passive:true});
+
+  panel.addEventListener('touchmove', (e)=>{
+    if (startY == null) return;
+
+    const dy = e.touches[0].clientY - startY;
+    const dx = e.touches[0].clientX - startX;
+
+    // 오버레이에서 스와이프: 80px 이상이면 닫기
+    if (!startOnSheet) {
+      if (dy > 80) { startY = null; closePanel(); }
+      return;
+    }
+
+    // 시트 안에서: 헤더에서 시작 + 본문이 최상단일 때만 닫기 허용
+    if (!startInHeader) return;
+    if (bodyScroller && bodyScroller.scrollTop > 0) return;
+
+    // 과도 반응 방지: 충분한 거리(140px) & 세로 위주 제스처일 때만
+    const verticalEnough = dy > 140;
+    const mostlyVertical = Math.abs(dx) <= 60;
+
+    if (verticalEnough && mostlyVertical) {
+      startY = null;
+      e.preventDefault(); // iOS에서 잔여 스크롤 방지
+      closePanel();
+    }
+  }, {passive:false});
+
+  panel.addEventListener('touchend', ()=>{
+    startY = startX = null;
+    startOnSheet = startInHeader = false;
+  });
+
 })();
 </script>
