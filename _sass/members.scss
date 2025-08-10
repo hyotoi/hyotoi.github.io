@@ -1,146 +1,204 @@
-/* ===========================
-      프로필 갤러리
-=========================== */
-
-.member-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  padding: 1rem;
-}
-
-.member-card {
-  position: relative;
-  aspect-ratio: 3 / 4;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* 모달 열릴 때 페이지 스크롤 잠금 */
+html.no-scroll, html.no-scroll body{
   overflow: hidden;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  transition: transform 0.2s ease-in-out;
-}
-
-.image-box {
-  flex: 1;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image-box img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  aspect-ratio: 1 / 1;
-}
-
-.member-info {
-  text-align: center;
-  display: flex;
-  gap: 0.25rem;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  line-height: 1.2;
-  align-items: baseline;
-}
-
-.member-name {
-  font-weight: bold;
-  font-size: 1rem;
-  color: black;
-  margin: 0;
-  padding: 0;
-}
-
-.member-instrument {
-  font-size: 0.9rem;
-  color: gray;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-}
-
-.member-role {
-  font-size: 0.56rem;
-  font-weight: bold;
-  color: #2a7ae2;
-  margin: 0;
-  padding: 0;
-}
-
-.popup {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   height: 100%;
-  background: white;
-  border: 2px solid #ccc;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  display: none;
-  z-index: 10;
-  box-sizing: border-box;
-  overflow-y: auto;
+}
+/* 컨테이너(본문) */
+.initial-content{
+  position: relative;
+  overflow: visible;
 }
 
-.popup.show {
-  display: block;
+/* 카드 그리드 */
+// .member-grid{
+//   display:grid; gap:16px;
+//   grid-template-columns: repeat(2, minmax(0,1fr));
+//   @media (min-width:640px){ grid-template-columns:repeat(3, minmax(0,1fr)); }
+//   @media (min-width:1024px){ grid-template-columns:repeat(4, minmax(0,1fr)); }
+// }
+
+/* 카드 그리드: 모바일 1칸 → 640px부터 2칸(데스크톱까지 고정) */
+.member-grid{
+  display: grid;
+  gap: 20px;                     /* 여백 살짝 넓힘(선택) */
+  grid-template-columns: 1fr;    /* 기본: 1칸 */
+}
+@media (min-width: 640px){
+  .member-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));  /* 2칸 고정 */
+  }
 }
 
-.popup .close {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
+
+/* 카드 */
+.member-card{
+  // min-height: 340px;
+  background:#fff; border:1px solid #e7e7e9; border-radius:16px; overflow:hidden; cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+  &:hover{ transform: translateY(-2px); box-shadow: 0 10px 16px rgba(0,0,0,.06); }
+  &:focus-visible{ outline: none; box-shadow:0 0 0 3px #2a7ae2; }
+}
+.member-card__thumb{ aspect-ratio:4/5; background:#f6f7f9; display:flex; align-items:center; justify-content:center; overflow:hidden;
+  img{ width:100%; height:100%; object-fit:cover; }
+}
+.member-card__meta{
+  padding: 16px 14px;
+  text-align: center;
+  // display: flex;
+  // gap: 0.8rem;
+  // font-size: 0.9rem;
+  // margin-top: 0.5rem;
+  // line-height: 1.2;
+  // align-items: baseline;
 }
 
-.popup-name {
-  font-weight: bold;
+
+.member-card__name {
+  margin: 0 0 1px;
+  padding: 0;
   font-size: 1rem;
   color: black;
-  margin: 0;
-  padding: 0;
+  font-weight: bold;
 }
-
-.popup-instrument {
-  font-size: 0.85rem;
+.member-card__instrument-role {
+  font-size: 0.75rem;   
   color: gray;
-  margin: 0;
-  padding: 0;
+  font-weight: bold;
 }
 
-.popup-role {
-  font-size: 0.8rem;
+.member-card__position {
+  font-size: 0.64rem;   
   font-weight: bold;
   color: #2a7ae2;
-  margin: 0;
-  padding: 0;
+  display: inline-block;
 }
 
-.popup p {
-  margin: 0;
-  line-height: 1.2;
-  font-size: 0.7rem;
+// .member-card__sep{
+//   font-size: 0.2rem;
+//   opacity:.5;
+//   margin: 0;
+//   padding: 0;}
+
+/* 모달이 항상 최상단으로 오게 */
+.member-panel.member-panel--incontainer{
+  position: fixed;     /* 뷰포트 기준 */
+  inset: 0;
+  z-index: 99999;      /* ← 푸터 보다 크게! 필요하면 2147483000 으로 더 올려도 됨 */
+  display: none;
+  pointer-events: none;
 }
 
-/* 🎯 추가된 popup 제목 스타일 */
-.popup-section-title {
-  margin-top: 0.75rem;
-  margin-bottom: 0.25rem;
-  font-size: 0.75rem;
-  font-weight: bold;
-  color: #333;
-  border-left: 3px solid #2a7ae2;
-  padding-left: 0.5rem;
+/* 오버레이 */
+.member-panel__overlay{
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.45);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+/* 데스크톱: 중앙 모달 */
+.member-panel__sheet{
+  position: absolute;
+  left: 50%; top: 50%;
+  width: min(640px, 92vw);
+  max-height: min(78vh, 880px);
+  transform: translate(-50%, -50%) scale(.98);
+  opacity: 0;
+  transition: transform .22s ease, opacity .22s ease;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.22);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.member-panel__body{
+  padding: 18px 20px;
+  overflow: auto; -webkit-overflow-scrolling: touch;
+}
+
+/* 열림 상태 */
+.member-panel.is-open{
+  display: block;
+  pointer-events: auto;
+}
+.member-panel.is-open .member-panel__overlay{ opacity: 1; }
+.member-panel.is-open .member-panel__sheet{
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* 모바일 바텀시트: 푸터/홈바와 겹치지 않게 여백 추가 */
+@media (max-width: 767px){
+  .member-panel__sheet{
+    left: 16px; right: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom));  /* iOS 홈바 안전영역 반영 */
+    top: auto; height: 85vh;
+    border-radius: 16px;
+    transform: translateY(calc(100% + 16px));
+    padding-bottom: calc(16px + env(safe-area-inset-bottom)); /* 내부 내용이 푸터/홈바에 눌리지 않게 */
+  }
+  .member-panel.is-open .member-panel__sheet{ transform: translateY(0); }
+}
+
+/* 상세 헤더/타이포 */
+.member-detail__header{
+  display:flex; gap:14px; align-items:center;
+  padding:16px 20px 10px; border-bottom:1px solid #eee;
+}
+.member-detail__header img{
+  width:72px; height:96px; object-fit:cover; border-radius:10px; background:#f6f7f9;
+}
+.member-detail__sub{ margin:.2rem 0 0; color:#666; }
+.member-detail__section{ margin:14px 0 0; }
+.member-detail__section h4{ margin:0 0 8px; font-size:1rem; }
+.member-detail__section ul{ margin:0; padding-left:18px; }
+.member-detail__section li{ margin:.2rem 0; line-height:1.45; }
+
+/* 닫기 버튼 */
+.member-panel__close{
+  position:absolute; right:10px; top:10px;
+  width:36px; height:36px; border:0; border-radius:10px;
+  background:#f3f4f6; cursor:pointer; font-size:20px;
+}
+.member-panel__close:hover{ background:#e9eaee; }
+
+/* 모션 최소화 */
+@media (prefers-reduced-motion: reduce){
+  .member-panel__overlay, .member-panel__sheet{ transition:none !important; }
+}
+
+.member-panel__overlay{
+  /* 헤더까지 동일하게 어둡게 보이도록 */
+  background: rgba(0,0,0,.45);
+  backdrop-filter: saturate(90%) blur(1px);
+}
+
+/* 모달 열릴 때 헤더의 선, 그림자, 배경 제거 */
+.modal-open .masthead,
+.modal-open .masthead__inner-wrap,
+.modal-open .masthead__menu,
+.modal-open .masthead .greedy-nav {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* 의사요소까지 제거 */
+.modal-open .masthead::before,
+.modal-open .masthead::after,
+.modal-open .masthead__inner-wrap::before,
+.modal-open .masthead__inner-wrap::after,
+.modal-open .masthead__menu::before,
+.modal-open .masthead__menu::after,
+.modal-open .masthead .greedy-nav::before,
+.modal-open .masthead .greedy-nav::after {
+  content: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* 헤더를 모달 뒤로 보내기 */
+.modal-open .masthead {
+  z-index: 0 !important;
+  position: relative !important;
 }
