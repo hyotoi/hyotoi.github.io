@@ -28,6 +28,8 @@ gallery:
   image_path: /assets/images/concert/2024-02-12-valentine-classics/wan-san-yip-D-_JZhn-8kI-unsplash.jpg
 - url: /assets/images/concert/2024-02-12-valentine-classics/wan-san-yip-uWBKWeuEwAE-unsplash.jpg
   image_path: /assets/images/concert/2024-02-12-valentine-classics/wan-san-yip-uWBKWeuEwAE-unsplash.jpg
+video: 
+- /assets/video/output.mp4
 ---
 
 사랑이 흐르는 클래식으로 연인과 함께한 특별한 발렌타인 공연.
