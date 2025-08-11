@@ -29,6 +29,7 @@ author_profile: true
   {% assign sid = g.name | slugify %}
   <section class="instrument-section" aria-labelledby="title-{{ sid }}" data-section-id="inst-{{ sid }}">
     <h2 class="instrument-title" id="title-{{ sid }}">{{ g.name }}</h2>
+    <div class="instrument-detail" data-detail-for="inst-{{ sid }}" hidden></div>
 
     <ul class="member-list" role="list">
       {% for m in g.items %}
@@ -142,29 +143,69 @@ author_profile: true
   window.addEventListener('hashchange', applyHashOnLoad);
   applyHashOnLoad();
 
-  // 아코디언(행 토글)
-  function toggleRow(head){
-    const row  = head.closest('[data-accordion]');
-    const body = row.querySelector('.row-body');
-    const isOpen = head.getAttribute('aria-expanded') === 'true';
-    head.setAttribute('aria-expanded', String(!isOpen));
-    body.hidden = isOpen;
-    if (!isOpen && matchMedia('(max-width: 1023px)').matches) {
-      body.scrollIntoView({behavior:'smooth', block:'nearest'});
-    }
+  // 아코디언(행 토글) → 섹션 하단 상세 박스 노출
+  function buildDetailMarkup(head, body){
+    const name = head.querySelector('.head-name')?.textContent?.trim() || '';
+    const role = head.querySelector('.head-role')?.textContent?.trim() || '';
+    const img  = head.querySelector('.head-thumb')?.getAttribute('src') || '';
+    return `
+      <div class="detail-wrap">
+        <div class="detail-left">
+          <img src="${img}" alt="${name}" class="detail-photo"/>
+          <div class="detail-meta">
+            <h3 class="detail-name">${name}</h3>
+            <p class="detail-role">${role}</p>
+          </div>
+        </div>
+        <div class="detail-right">${body.innerHTML}</div>
+        <button type="button" class="detail-close" aria-label="닫기">×</button>
+      </div>`;
   }
+
+  function openDetailFromRow(head){
+    const row = head.closest('[data-accordion]');
+    const section = head.closest('.instrument-section');
+    const container = section.querySelector('.instrument-detail');
+    const body = row.querySelector('.row-body');
+
+    // 이전 선택 해제: 같은 섹션 내에서 하나만
+    section.querySelectorAll('.member-row.is-hidden').forEach(li=> li.classList.remove('is-hidden'));
+
+    // 컨텐츠 주입
+    container.innerHTML = buildDetailMarkup(head, body);
+    container.hidden = false;
+
+    // 선택된 항목은 리스트에서 숨김 처리
+    row.classList.add('is-hidden');
+
+    // 닫기 핸들러
+    container.querySelector('.detail-close').addEventListener('click', ()=>{
+      container.hidden = true;
+      row.classList.remove('is-hidden');
+      container.innerHTML = '';
+      // 포커스 복귀
+      head.focus();
+    }, { once: true });
+
+    // 상세로 스크롤
+    container.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
   root.addEventListener('click', (e)=>{
     const head = e.target.closest('.row-head');
     if(!head) return;
-    toggleRow(head);
+    e.preventDefault();
+    openDetailFromRow(head);
   });
+
+  // 키보드 접근성: Enter/Space 로 열기, ↑↓ 이동
   root.addEventListener('keydown', (e)=>{
     const head = e.target.closest('.row-head');
     if(!head) return;
-    if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') { e.preventDefault(); toggleRow(head); return; }
+    if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') { e.preventDefault(); openDetailFromRow(head); return; }
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
-      const heads = [...head.closest('.member-list').querySelectorAll('.row-head')];
+      const heads = [...head.closest('.member-list').querySelectorAll('.row-head')].filter(h=>!h.closest('.member-row').classList.contains('is-hidden'));
       const idx = heads.indexOf(head);
       const next = (e.key === 'ArrowDown') ? heads[idx+1] : heads[idx-1];
       next?.focus();
@@ -225,21 +266,20 @@ author_profile: true
 
 /* 헤더 버튼(터치 타겟 44px 이상) */
 .row-head{
-  width:100%; min-height: 52px;
-  display:flex; align-items:center; justify-content:space-between;
-  gap:10px; padding:12px; background:#fff; border:0; cursor:pointer; text-align:left;
+  width:100%;
+  display:flex; flex-direction: column; align-items:center; justify-content:flex-start;
+  gap:10px; padding:12px 12px 10px; background:#fff; border:0; cursor:pointer; text-align:center;
 }
 .row-head:focus-visible{ outline: none; box-shadow:0 0 0 3px #2a7ae2; border-radius:10px; }
-.head-left{ display:flex; align-items:center; gap:12px; min-width:0; }
-.head-thumb{ width:52px; height:70px; object-fit:cover; border-radius:8px; background:#f6f7f9; flex: 0 0 auto; }
-.head-texts{ display:flex; flex-direction:column; min-width:0; }
+.head-left{ display:flex; flex-direction: column; align-items:center; gap:10px; min-width:0; }
+.head-thumb{ width:96px; height:128px; object-fit:cover; border-radius:10px; background:#f6f7f9; flex: 0 0 auto; }
+.head-texts{ display:flex; flex-direction:column; align-items:center; text-align:center; min-width:0; }
 .head-name{ font-size:.98rem; color:#111; line-height:1.25; word-break:keep-all; }
 .head-role{ font-size:.78rem; color:#666; }
-.head-icon{ flex: 0 0 auto; opacity:.6; transform: rotate(0deg); transition: transform .15s ease; }
-.row-head[aria-expanded="true"] .head-icon{ transform: rotate(180deg); }
+.head-icon{ display:none; }
 
 /* 본문 */
-.row-body{ padding: 0 12px 12px 76px; }
+.row-body{ padding: 12px; }
 .detail-block{ margin:10px 0 0; }
 .detail-block h4{ margin:0 0 6px; font-size:.9rem; color:#222; }
 .detail-block ul{ margin:0; padding-left:18px; }
@@ -247,11 +287,11 @@ author_profile: true
 
 /* ------- 태블릿(>=768px) ------- */
 @media (min-width: 768px){
-  .row-head{ padding:14px 16px; min-height: 56px; }
-  .head-thumb{ width:60px; height:80px; }
+  .row-head{ padding:14px 16px 12px; }
+  .head-thumb{ width:112px; height:152px; }
   .head-name{ font-size:1rem; }
   .head-role{ font-size:.8rem; }
-  .row-body{ padding: 0 16px 14px 96px; }
+  .row-body{ padding: 14px 16px; }
 }
 
 /* ------- 데스크톱(>=1024px) ------- */
@@ -266,9 +306,9 @@ author_profile: true
   .member-row{
     border: 1px solid #e8e8ea; border-radius: 12px; overflow: hidden; background: #fff;
   }
-  .row-head{ padding: 14px; min-height: 60px; border-bottom: 1px solid #f0f0f2; }
-  .row-body{ padding: 12px 14px 14px 90px; }
-  .head-thumb{ width:64px; height:86px; }
+  .row-head{ padding: 16px 16px 12px; border-bottom: 1px solid #f0f0f2; }
+  .row-body{ padding: 14px; }
+  .head-thumb{ width:128px; height:176px; }
 }
 @media (min-width: 1280px){
   .member-list{ grid-template-columns: repeat(3, minmax(0,1fr)); }   /* ✅ 3열 */
@@ -277,12 +317,90 @@ author_profile: true
   .member-list{ grid-template-columns: repeat(4, minmax(0,1fr)); }   /* ✅ 4열 */
 }
 
-@media (min-width: 1800px){
-  .member-list{ grid-template-columns: repeat(5, minmax(0,1fr)); }
+/* ---------- 섹션 하단 상세 박스 ---------- */
+.instrument-detail{ margin: 10px 0 22px; border:1px solid #e8e8ea; border-radius: 14px; background:#fff; box-shadow:0 6px 18px rgba(0,0,0,.06); padding: 14px; }
+.detail-wrap{ display:grid; grid-template-columns: 220px 1fr; gap:16px; align-items:flex-start; }
+.detail-photo{ width: 100%; height: auto; border-radius: 10px; object-fit: cover; background:#f6f7f9; }
+.detail-meta{ margin-top: 10px; }
+.detail-name{ margin:0 0 4px; font-size:1.25rem; }
+.detail-role{ margin:0; color:#666; font-size:.95rem; }
+.detail-right .detail-block{ margin-top: 0; }
+.detail-close{ position:absolute; right:10px; top:10px; width:36px; height:36px; border:0; border-radius:10px; background:#f3f4f6; font-size:20px; cursor:pointer; }
+.instrument-detail{ position: relative; }
+
+/* 리스트에서 선택된 항목은 숨김 */
+.member-row.is-hidden{ display:none !important; }
+
+@media (max-width: 767px){
+  .detail-wrap{ grid-template-columns: 1fr; }
+  .detail-photo{ max-width: 220px; }
 }
 
 /* 모션 최소화 존중 */
 @media (prefers-reduced-motion: reduce){
   .head-icon{ transition:none !important; }
+}
+
+/* === Image-first card style: no card background, image fills; text overlays === */
+
+/* Remove list/card borders so images can be full-bleed */
+.member-list{ border-top: 0 !important; }
+.member-row{ border: 0 !important; background: transparent !important; border-radius: 12px; overflow: hidden; }
+
+/* Make the card head behave like a block-level image card */
+.row-head{
+  display: block !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  text-align: left !important;
+  height: 100%;
+}
+
+/* Container for image + overlay */
+.head-left{ position: relative !important; display: block !important; min-width: 0; height: 100%; }
+
+/* Full-bleed image with fixed aspect ratio */
+.head-thumb{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;               /* rounded card corners */
+  background: #f0f0f0;
+  transition: transform .18s ease;
+}
+
+/* Subtle hover zoom on desktop */
+@media (hover:hover){
+  .row-head:hover .head-thumb{ transform: scale(1.02); }
+}
+
+/* Turn the text block into a bottom overlay */
+.head-texts{
+  position: absolute !important;
+  left: 0; right: 0; bottom: 0;
+  display: flex !important; flex-direction: column; align-items: flex-start !important;
+  text-align: left !important; gap: 2px;
+  padding: 12px 12px 10px;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0,0,0,.58), rgba(0,0,0,.28) 38%, rgba(0,0,0,0) 72%);
+  border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
+}
+.head-name{ color:#fff !important; font-weight: 700; font-size: 1rem; margin: 0; text-shadow: 0 1px 2px rgba(0,0,0,.35); }
+.head-role{ color:#eee !important; font-size: .86rem; margin: 0; text-shadow: 0 1px 2px rgba(0,0,0,.35); }
+
+/* Make row-body padding independent of the image card above */
+.row-body{ padding: 14px !important; }
+
+/* Grid cards remain; card chrome is gone so increase gap a bit on desktop */
+@media (min-width: 1024px){
+  .member-list{ gap: 16px !important; }
+}
+
+/* Mobile fine-tuning */
+@media (max-width: 767px){
+  .head-name{ font-size: .98rem; }
+  .head-role{ font-size: .8rem; }
 }
 </style>
