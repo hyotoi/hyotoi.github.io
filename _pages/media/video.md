@@ -59,6 +59,3 @@ layout: single
     {% endif %}
   {% endfor %}
 </section>
-
-</section>
-
