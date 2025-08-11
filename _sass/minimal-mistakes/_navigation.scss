@@ -196,7 +196,17 @@
     }
 
     &.site-title {
-      margin-inline-start: 0;
+      order: -1;
+      margin-inline-start: 0 !important;
+      padding-inline-start: 0;
+      margin-right: auto;
+
+      position: relative; // allow a tiny, safe offset without affecting layout
+
+      // Desktop-only: nudge toward the sidebar line
+      @media (min-width: 1024px){ left: -8px; }
+      @media (min-width: 1280px){ left: -12px; }
+      @media (min-width: 1536px){ left: -16px; }
     }
   }
 
@@ -569,3 +579,4 @@
     padding-inline-start: 3.25rem;
   }
 }
+

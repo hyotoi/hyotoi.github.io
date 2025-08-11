@@ -24,8 +24,9 @@
     justify-content: space-between;
     font-family: $sans-serif-narrow;
 
+    /* Always use full width on large screens so site-title can sit at far left */
     @include breakpoint($x-large) {
-      max-width: $max-width;
+      max-width: 100%;
     }
 
     nav {
@@ -43,13 +44,29 @@
 }
 
 .site-title {
+  order: -1; /* 항상 왼쪽 */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-item-align: center;
   align-self: center;
   font-weight: bold;
-  // z-index: 20;
+  position: relative; /* allow small, safe offset without affecting layout */
+  left: 0;            /* default: no offset on mobile/tablet */
+  margin-inline-start: 0 !important;
+  padding-inline-start: 0;
+  margin-right: auto; /* push other nav to the right */
+}
+
+/* Nudge site-title toward sidebar only on desktop */
+@media (min-width: 1024px){
+  .masthead__menu .greedy-nav .site-title{ left: -10px; }
+}
+@media (min-width: 1280px){
+  .masthead__menu .greedy-nav .site-title{ left: -14px; }
+}
+@media (min-width: 1536px){
+  .masthead__menu .greedy-nav .site-title{ left: 175px; }
 }
 
 .site-subtitle {

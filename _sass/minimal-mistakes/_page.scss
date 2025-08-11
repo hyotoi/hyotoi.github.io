@@ -13,7 +13,8 @@
   animation-delay: 0.15s;
 
   @include breakpoint($x-large) {
-    max-width: $max-width;
+    /* Allow wider page via CSS var fallback to theme $max-width */
+    max-width: var(--page-max, #{$max-width});
   }
 }
 
@@ -556,6 +557,37 @@ body {
 
     @include breakpoint($x-large) {
       padding-inline-end: 0;
+    }
+  }
+
+  /* Expand main container when using `classes: wide` */
+  #main {
+    max-width: var(--page-max-wide, 1600px);
+  }
+
+  /* Ultra-wide screens */
+  @media (min-width: 1800px) {
+    #main { max-width: var(--page-max-wide-xl, 1760px); }
+  }
+
+  /* When wide, don't reserve space for the right sidebar */
+  .page {
+    @include breakpoint($large) {
+      width: 100%;
+      padding-inline-end: 0;
+    }
+    @include breakpoint($x-large) {
+      width: 100%;
+      padding-inline-end: 0;
+    }
+  }
+
+  .page__related {
+    @include breakpoint($large) {
+      width: 100%;
+    }
+    @include breakpoint($x-large) {
+      width: 100%;
     }
   }
 }

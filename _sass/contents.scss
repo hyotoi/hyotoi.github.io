@@ -136,3 +136,6 @@
   border-radius: 8px;
 }
 
+.responsive-video { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; }
+.responsive-video iframe,
+.responsive-video video { position: absolute; inset: 0; width: 100%; height: 100%; }
