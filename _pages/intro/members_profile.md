@@ -33,56 +33,159 @@ author_profile: true
 
     <ul class="member-list" role="list">
       {% for m in g.items %}
-      <li class="member-row" data-accordion>
-        <button class="row-head"
-                type="button"
-                aria-expanded="false"
-                aria-controls="row-{{ sid }}-{{ forloop.index }}"
-                id="head-{{ sid }}-{{ forloop.index }}">
-          <span class="head-left">
-            <img class="head-thumb" src="{{ m.image | relative_url }}" alt="{{ m.name }}" loading="lazy">
-            <span class="head-texts">
-              <strong class="head-name">{{ m.name }}</strong>
-              <span class="head-role">{% if m.role %}{{ m.role }}{% else %}단원{% endif %}</span>
+        {% if m.role == '악장' %}
+        <li class="member-row" data-accordion>
+          <button class="row-head"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="row-{{ sid }}-{{ forloop.index }}-akjang"
+                  id="head-{{ sid }}-{{ forloop.index }}-akjang">
+            <span class="head-left">
+              <img class="head-thumb" src="{{ m.image | relative_url }}" alt="{{ m.name }}" loading="lazy">
+              <span class="head-texts">
+                <strong class="head-name">{{ m.name }}</strong>
+                <span class="head-role">{{ m.role }}</span>
+              </span>
             </span>
-          </span>
-          <span class="head-icon" aria-hidden="true">▾</span>
-        </button>
-
-        <div class="row-body"
-             id="row-{{ sid }}-{{ forloop.index }}"
-             role="region"
-             aria-labelledby="head-{{ sid }}-{{ forloop.index }}"
-             hidden>
-          {% if m.education %}
-          <div class="detail-block">
-            <h4>학력</h4>
-            <ul>{% for it in m.education %}<li>{{ it }}</li>{% endfor %}</ul>
+            <span class="head-icon" aria-hidden="true">▾</span>
+          </button>
+          <div class="row-body"
+               id="row-{{ sid }}-{{ forloop.index }}-akjang"
+               role="region"
+               aria-labelledby="head-{{ sid }}-{{ forloop.index }}-akjang"
+               hidden>
+            {% if m.education %}
+            <div class="detail-block"><h4>학력</h4><ul>{% for it in m.education %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.concours %}
+            <div class="detail-block"><h4>수상 내역</h4><ul>{% for it in m.concours %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.experience %}
+            <div class="detail-block"><h4>경력</h4><ul>{% for it in m.experience %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.current %}
+            <div class="detail-block"><h4>현재</h4><ul>{% for it in m.current %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
           </div>
-          {% endif %}
+        </li>
+        {% endif %}
+      {% endfor %}
 
-          {% if m.concours %}
-          <div class="detail-block">
-            <h4>수상 내역</h4>
-            <ul>{% for it in m.concours %}<li>{{ it }}</li>{% endfor %}</ul>
+      {% for m in g.items %}
+        {% if m.role == '수석' %}
+        <li class="member-row" data-accordion>
+          <button class="row-head"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="row-{{ sid }}-{{ forloop.index }}-suseok"
+                  id="head-{{ sid }}-{{ forloop.index }}-suseok">
+            <span class="head-left">
+              <img class="head-thumb" src="{{ m.image | relative_url }}" alt="{{ m.name }}" loading="lazy">
+              <span class="head-texts">
+                <strong class="head-name">{{ m.name }}</strong>
+                <span class="head-role">{{ m.role }}</span>
+              </span>
+            </span>
+            <span class="head-icon" aria-hidden="true">▾</span>
+          </button>
+          <div class="row-body"
+               id="row-{{ sid }}-{{ forloop.index }}-suseok"
+               role="region"
+               aria-labelledby="head-{{ sid }}-{{ forloop.index }}-suseok"
+               hidden>
+            {% if m.education %}
+            <div class="detail-block"><h4>학력</h4><ul>{% for it in m.education %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.concours %}
+            <div class="detail-block"><h4>수상 내역</h4><ul>{% for it in m.concours %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.experience %}
+            <div class="detail-block"><h4>경력</h4><ul>{% for it in m.experience %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.current %}
+            <div class="detail-block"><h4>현재</h4><ul>{% for it in m.current %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
           </div>
-          {% endif %}
+        </li>
+        {% endif %}
+      {% endfor %}
 
-          {% if m.experience %}
-          <div class="detail-block">
-            <h4>경력</h4>
-            <ul>{% for it in m.experience %}<li>{{ it }}</li>{% endfor %}</ul>
+      {% for m in g.items %}
+        {% if m.role == '차석' %}
+        <li class="member-row" data-accordion>
+          <button class="row-head"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="row-{{ sid }}-{{ forloop.index }}-chaseok"
+                  id="head-{{ sid }}-{{ forloop.index }}-chaseok">
+            <span class="head-left">
+              <img class="head-thumb" src="{{ m.image | relative_url }}" alt="{{ m.name }}" loading="lazy">
+              <span class="head-texts">
+                <strong class="head-name">{{ m.name }}</strong>
+                <span class="head-role">{{ m.role }}</span>
+              </span>
+            </span>
+            <span class="head-icon" aria-hidden="true">▾</span>
+          </button>
+          <div class="row-body"
+               id="row-{{ sid }}-{{ forloop.index }}-chaseok"
+               role="region"
+               aria-labelledby="head-{{ sid }}-{{ forloop.index }}-chaseok"
+               hidden>
+            {% if m.education %}
+            <div class="detail-block"><h4>학력</h4><ul>{% for it in m.education %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.concours %}
+            <div class="detail-block"><h4>수상 내역</h4><ul>{% for it in m.concours %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.experience %}
+            <div class="detail-block"><h4>경력</h4><ul>{% for it in m.experience %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.current %}
+            <div class="detail-block"><h4>현재</h4><ul>{% for it in m.current %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
           </div>
-          {% endif %}
+        </li>
+        {% endif %}
+      {% endfor %}
 
-          {% if m.current %}
-          <div class="detail-block">
-            <h4>현재</h4>
-            <ul>{% for it in m.current %}<li>{{ it }}</li>{% endfor %}</ul>
+      {% for m in g.items %}
+        {% if m.role != '악장' and m.role != '수석' and m.role != '차석' %}
+        <li class="member-row" data-accordion>
+          <button class="row-head"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="row-{{ sid }}-{{ forloop.index }}-others"
+                  id="head-{{ sid }}-{{ forloop.index }}-others">
+            <span class="head-left">
+              <img class="head-thumb" src="{{ m.image | relative_url }}" alt="{{ m.name }}" loading="lazy">
+              <span class="head-texts">
+                <strong class="head-name">{{ m.name }}</strong>
+                <span class="head-role">{% if m.role %}{{ m.role }}{% else %}단원{% endif %}</span>
+              </span>
+            </span>
+            <span class="head-icon" aria-hidden="true">▾</span>
+          </button>
+          <div class="row-body"
+               id="row-{{ sid }}-{{ forloop.index }}-others"
+               role="region"
+               aria-labelledby="head-{{ sid }}-{{ forloop.index }}-others"
+               hidden>
+            {% if m.education %}
+            <div class="detail-block"><h4>학력</h4><ul>{% for it in m.education %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.concours %}
+            <div class="detail-block"><h4>수상 내역</h4><ul>{% for it in m.concours %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.experience %}
+            <div class="detail-block"><h4>경력</h4><ul>{% for it in m.experience %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if m.current %}
+            <div class="detail-block"><h4>현재</h4><ul>{% for it in m.current %}<li>{{ it }}</li>{% endfor %}</ul></div>
+            {% endif %}
           </div>
-          {% endif %}
-        </div>
-      </li>
+        </li>
+        {% endif %}
       {% endfor %}
     </ul>
   </section>
