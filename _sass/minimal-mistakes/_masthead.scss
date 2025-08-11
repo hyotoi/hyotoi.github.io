@@ -24,8 +24,9 @@
     justify-content: space-between;
     font-family: $sans-serif-narrow;
 
+    /* Always use full width on large screens so site-title can sit at far left */
     @include breakpoint($x-large) {
-      max-width: $max-width;
+      max-width: 100%;
     }
 
     nav {
@@ -43,6 +44,7 @@
 }
 
 .site-title {
+  order: -1; /* 항상 왼쪽 */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -50,6 +52,9 @@
   align-self: center;
   font-weight: bold;
   // z-index: 20;
+  margin-inline-start: 0 !important;
+  padding-inline-start: 0;
+  margin-right: auto; /* push other nav to the right */
 }
 
 .site-subtitle {
