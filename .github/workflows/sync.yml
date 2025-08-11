@@ -52,14 +52,17 @@ jobs:
             echo "SKIP_MERGE=0" >> $GITHUB_ENV
           fi
 
-      # 5) Merge (충돌 시 source 쪽 선호: -X theirs)
-      - name: Merge source into target
+      # 5) Sync source into target with commit
+      - name: Sync source into target with commit
         if: env.SKIP_MERGE == '0'
         run: |
           set -euo pipefail
-          # 서로 다른 히스토리도 허용하고, 충돌 시 source(=theirs) 우선
-          git merge --no-edit --allow-unrelated-histories -X theirs "source/${SRC_DEFAULT}" \
-            || (echo "❌ Merge conflict. Please resolve manually."; exit 1)
+          git rm -r . || true
+          git checkout "source/${SRC_DEFAULT}" -- .
+          git add .
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "🤖 Sync from muse_profile" || echo "No changes to commit"
 
       # 6) 변경 사항이 있으면 push
       - name: Push merge result
