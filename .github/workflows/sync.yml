@@ -21,8 +21,13 @@ jobs:
       - name: Add source remote and fetch
         run: |
           set -euo pipefail
-          git remote add source https://github.com/ehdwn1991/muse_profile.git
-          git fetch --tags source
+          git remote add source https://github.com/ehdwn1991/muse_profile.git || true
+
+          # 🔧 Clean local tags to avoid clobber on fetch
+          git tag -l | xargs -r -n 1 git tag -d || true
+
+          # 📥 Fetch source with tags (force), and prune removed refs
+          git fetch source --prune --tags --force
 
           # A 저장소의 기본 브랜치 자동 감지 (source/HEAD → 브랜치명)
           git remote set-head source -a || true
@@ -69,5 +74,6 @@ jobs:
         if: env.SKIP_MERGE == '0'
         run: |
           set -euo pipefail
-          git push origin "HEAD:${TARGET_DEFAULT}"
-          echo "🚀 Pushed merged changes to ${TARGET_DEFAULT}"
+          git push origin "HEAD:${TARGET_DEFAULT}" --force
+          git push origin --tags --force
+          echo "🚀 Pushed merged changes and tags to ${TARGET_DEFAULT}"
