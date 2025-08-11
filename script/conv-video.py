@@ -2,7 +2,7 @@ import os
 import subprocess
 import json
 
-VIDEO_DIR = "./assets/video"  # 작업할 폴더
+VIDEO_DIR = "./assets/video" # work dir
 
 def needs_conversion(filepath):
     """
