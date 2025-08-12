@@ -5,6 +5,7 @@ on:
     workflows: ["Sync from muse_profile"]
     types:
       - completed
+  workflow_dispatch:
 
 permissions:
   contents: write   # 브랜치 생성/커밋/푸시 권한

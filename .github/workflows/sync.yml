@@ -1,79 +1,131 @@
 name: Sync from muse_profile
 
 on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 12 * *"  # 매일 낮 12시
   repository_dispatch:
-    types: [sync_triggered]
+    types: [sync_triggered]  # 외부에서 API로 트리거
+
+permissions:
+  contents: write          # 브랜치/릴리스 생성
+  pull-requests: write     # PR 생성
 
 jobs:
   sync:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write   # GITHUB_TOKEN으로 push 허용
 
     steps:
-      # 1) B 저장소(현재 repo) 체크아웃
-      - name: Checkout target repo (hyotoi.github.io)
+      - name: Detect target branch
+        id: detect
+        run: |
+          echo "BRANCH=${{ github.event.repository.default_branch }}" >> $GITHUB_ENV
+          echo "ts=$(date -u +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
+
+      - name: Sync fork via REST API (merge-upstream)
+        id: merge_upstream
+        env:
+          GH_OWNER: ${{ github.repository_owner }}
+          GH_REPO:  ${{ github.event.repository.name }}
+          BRANCH:   ${{ env.BRANCH }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          echo "➡️ Syncing ${GH_OWNER}/${GH_REPO}:${BRANCH} from upstream (merge-upstream API)…"
+          RESP_CODE=$(curl -sS -w "%{http_code}" -o /tmp/resp.json -L -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/merge-upstream" \
+            -d "{\"branch\":\"${BRANCH}\"}")
+
+          echo "HTTP ${RESP_CODE}"
+          echo "Response:" && cat /tmp/resp.json || true
+          echo "code=${RESP_CODE}" >> $GITHUB_OUTPUT
+
+          if [ "${RESP_CODE}" = "200" ]; then
+            echo "✅ Fast-forward 완료 (Sync fork)."
+            exit 0
+          elif [ "${RESP_CODE}" = "409" ]; then
+            echo "⚠️ 충돌 또는 fast-forward 불가. PR로 처리 단계로 진행합니다."
+            exit 0
+          else
+            echo "❌ 실패 (HTTP ${RESP_CODE})"
+            exit 1
+          fi
+
+      # === 200 처리: 릴리스 자동 생성 (자동 릴리스 노트) ===
+      - name: Create auto-generated release notes
+        if: steps.merge_upstream.outputs.code == '200'
+        env:
+          GH_OWNER: ${{ github.repository_owner }}
+          GH_REPO:  ${{ github.event.repository.name }}
+          BRANCH:   ${{ env.BRANCH }}
+          TS:       ${{ env.ts }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          TAG="sync-${BRANCH}-${TS}"
+          TITLE="🤖 Sync upstream on ${TS} (${BRANCH})"
+          echo "➡️ Creating release ${TAG}"
+          curl -sS -L -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/releases" \
+            -d "{
+              \"tag_name\": \"${TAG}\",
+              \"target_commitish\": \"${BRANCH}\",
+              \"name\": \"${TITLE}\",
+              \"generate_release_notes\": true
+            }" \
+            | tee /tmp/release.json
+
+      # === 409 처리: 자동 PR 생성 ===
+      - name: Checkout (for PR branch creation)
+        if: steps.merge_upstream.outputs.code == '409'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 2) A 저장소를 remote로 추가하고 fetch (태그 포함)
-      - name: Add source remote and fetch
-        run: |
-          set -euo pipefail
-          git remote add source https://github.com/ehdwn1991/muse_profile.git || true
-
-          # 🔧 Clean local tags to avoid clobber on fetch
-          git tag -l | xargs -r -n 1 git tag -d || true
-
-          # 📥 Fetch source with tags (force), and prune removed refs
-          git fetch source --prune --tags --force
-
-          # A 저장소의 기본 브랜치 자동 감지 (source/HEAD → 브랜치명)
-          git remote set-head source -a || true
-          SRC_DEFAULT="$(git rev-parse --abbrev-ref source/HEAD | sed 's|source/||' || echo main)"
-          echo "SRC_DEFAULT=${SRC_DEFAULT}" >> $GITHUB_ENV
-          echo "🔎 Source default branch: ${SRC_DEFAULT}"
-
-      # 3) 대상(B) 기본 브랜치 체크아웃
-      - name: Switch to target default branch
+      - name: Prepare PR branch from upstream tip
+        if: steps.merge_upstream.outputs.code == '409'
         env:
-          TARGET_DEFAULT: ${{ github.event.repository.default_branch }}
+          BRANCH: ${{ env.BRANCH }}
         run: |
           set -euo pipefail
-          BRANCH="${TARGET_DEFAULT:-main}"
-          echo "TARGET_DEFAULT=${BRANCH}" >> $GITHUB_ENV
-          echo "🔁 Checkout target branch: ${BRANCH}"
-          git checkout "${BRANCH}"
+          git remote add upstream https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}.git || true
+          # upstream URL을 포크 설정에서 자동 추적할 수 없으니, 필요 시 수동으로 교체하세요:
+          # git remote set-url upstream https://github.com/<UPSTREAM_OWNER>/<UPSTREAM_REPO>.git
 
-      # 4) 병합 필요 여부 확인 (이미 포함되어 있으면 스킵)
-      - name: Skip if already up to date
-        run: |
-          set -euo pipefail
-          if git merge-base --is-ancestor "source/${SRC_DEFAULT}" HEAD; then
-            echo "✅ Already up to date. Skipping merge & push."
-            echo "SKIP_MERGE=1" >> $GITHUB_ENV
-          else
-            echo "SKIP_MERGE=0" >> $GITHUB_ENV
-          fi
+          # 기본적으로 GitHub 포크 관계가 설정되어 있으면 upstream 리모트가 자동 추적됩니다.
+          git fetch upstream --prune --tags
+          NEW_BRANCH="sync/${BRANCH}-${{ env.ts }}"
+          git checkout -B "${NEW_BRANCH}" "upstream/${BRANCH}"
+          git push origin "${NEW_BRANCH}"
+          echo "NEW_BRANCH=${NEW_BRANCH}" >> $GITHUB_ENV
 
-      # 5) Sync source into target with commit
-      - name: Sync source into target with commit
-        if: env.SKIP_MERGE == '0'
+      - name: Open Pull Request (upstream → fork base)
+        if: steps.merge_upstream.outputs.code == '409'
+        env:
+          GH_OWNER: ${{ github.repository_owner }}
+          GH_REPO:  ${{ github.event.repository.name }}
+          BRANCH:   ${{ env.BRANCH }}
+          NEW_BRANCH: ${{ env.NEW_BRANCH }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          git rm -r . || true
-          git checkout "source/${SRC_DEFAULT}" -- .
-          git add .
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "🤖 Sync from muse_profile" || echo "No changes to commit"
-
-      # 6) 변경 사항이 있으면 push
-      - name: Push merge result
-        if: env.SKIP_MERGE == '0'
-        run: |
-          set -euo pipefail
-          git push origin "HEAD:${TARGET_DEFAULT}" --force
-          git push origin --tags --force
-          echo "🚀 Pushed merged changes and tags to ${TARGET_DEFAULT}"
+          TITLE="Sync upstream into ${BRANCH}"
+          BODY="This PR was created automatically because the fork could not be fast-forwarded via **merge-upstream**.\n\n- Base: \`${BRANCH}\`\n- Head: \`${NEW_BRANCH}\`\n\nAfter merge, the fork will be aligned with upstream."
+          PR_RESP=$(curl -sS -L -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/pulls" \
+            -d "{
+              \"title\": \"${TITLE}\",
+              \"head\": \"${NEW_BRANCH}\",
+              \"base\": \"${BRANCH}\",
+              \"body\": ${BODY@Q}
+            }")
+          echo "${PR_RESP}"
