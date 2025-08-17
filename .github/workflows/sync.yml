@@ -40,29 +40,44 @@ jobs:
             "https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/merge-upstream" \
             -d "{\"branch\":\"${BRANCH}\"}")
 
-          echo "HTTP ${RESP_CODE}"
-          echo "Response:" && cat /tmp/resp.json || true
-          echo "code=${RESP_CODE}" >> $GITHUB_OUTPUT
+          # Normalize (defensive against stray whitespace)
+          CODE_TRIM=$(printf "%s" "${RESP_CODE}" | tr -cd '0-9')
 
-          # If the upstream includes workflow file changes, GitHub App token without 'workflows: write' yields 422.
-          # Map 422 to 409 to trigger PR flow instead of failing.
-          if [ "${RESP_CODE}" = "422" ]; then
-            echo "⚠️  Received 422 (likely workflow file update not permitted). Falling back to PR flow."
-            # Override the step output to mimic 409 so downstream steps run.
+          echo "HTTP ${CODE_TRIM}"
+          echo "Response:" && cat /tmp/resp.json || true
+
+          # Set default output to whatever we saw first
+          echo "code=${CODE_TRIM}" >> $GITHUB_OUTPUT
+
+          # === Special handling ===
+          # Some upstreams contain workflow file updates. GitHub App tokens may receive 422
+          # with a message like "refusing to allow a GitHub App to create or update workflow …".
+          # Treat this as a PR-needed case (same as 409).
+          if [ "${CODE_TRIM}" = "422" ] || grep -qi 'refusing to allow a GitHub App to create or update workflow' /tmp/resp.json; then
+            echo "⚠️  Received 422 (workflow update not permitted). Falling back to PR flow."
             echo "code=409" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          if [ "${RESP_CODE}" = "200" ]; then
+          if [ "${CODE_TRIM}" = "200" ]; then
             echo "✅ Fast-forward 완료 (Sync fork)."
             exit 0
-          elif [ "${RESP_CODE}" = "409" ]; then
+          fi
+
+          if [ "${CODE_TRIM}" = "409" ]; then
             echo "⚠️ 충돌 또는 fast-forward 불가. PR로 처리 단계로 진행합니다."
             exit 0
-          else
-            echo "❌ 실패 (HTTP ${RESP_CODE})"
-            exit 1
           fi
+
+          # Unknown code: do not fail here; let a dedicated step handle failing with context
+          echo "❓ 예상치 못한 코드: ${CODE_TRIM}. Downstream step will fail the job."
+          exit 0
+
+      - name: Fail on unexpected HTTP code
+        if: ${{ and(ne(steps.merge_upstream.outputs.code, '200'), ne(steps.merge_upstream.outputs.code, '409')) }}
+        run: |
+          echo "merge-upstream returned code='${{ steps.merge_upstream.outputs.code }}' which is not handled"
+          exit 1
 
       # === 200 처리: 릴리스 자동 생성 (자동 릴리스 노트) ===
       - name: Create auto-generated release notes
