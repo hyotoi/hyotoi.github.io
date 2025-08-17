@@ -14,7 +14,7 @@ author_profile: true
   {% assign sorted = site.data.members | sort: 'order' %}
   {% assign groups = sorted | group_by: 'instrument' %}
   {%- comment -%} 오케스트라 표준 악기 배치 순서: 현악기 → 목관악기 → 금관악기 → 타악기 → 기타 {%- endcomment -%}
-  {%- assign desired_order = "Violin,Viola,Cello,Double Bass,Contrabass,Bass,Flute,Piccolo,Oboe,English Horn,Clarinet,Bass Clarinet,Bassoon,Contrabassoon,Horn,Trumpet,Trombone,Bass Trombone,Tuba,Timpani,Percussion,Xylophone,Marimba,Vibraphone,Glockenspiel,Harp,Piano,Celesta,Organ" | split: "," -%}
+  {%- assign desired_order = "Violin,Viola,Cello,Double Bass,Contrabass,Bass,Flute,Piccolo,Oboe,English Horn,Clarinet,Bass Clarinet,Bassoon,Contrabassoon,Horn,Trumpet,Trombone,Bass Trombone,Tuba,Timpani,Percussion,Xylophone,Marimba,Vibraphone,Glockenspiel,Piano,Harp,Organ,Celesta" | split: "," -%}
   {%- assign desired_order_lc = desired_order | join:"|" | downcase | split:"|" -%}
   {%- assign ordered_groups = "" | split:"|" -%}
 
