@@ -15,6 +15,9 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    env:
+      UPSTREAM_OWNER: ehdwn1991
+      UPSTREAM_REPO: muse_profile
 
     steps:
       - name: Detect target branch
@@ -119,11 +122,8 @@ jobs:
           BRANCH: ${{ env.BRANCH }}
         run: |
           set -euo pipefail
-          git remote add upstream https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}.git || true
-          # upstream URL을 포크 설정에서 자동 추적할 수 없으니, 필요 시 수동으로 교체하세요:
-          # git remote set-url upstream https://github.com/<UPSTREAM_OWNER>/<UPSTREAM_REPO>.git
-
-          # 기본적으로 GitHub 포크 관계가 설정되어 있으면 upstream 리모트가 자동 추적됩니다.
+          git remote remove upstream 2>/dev/null || true
+          git remote add upstream "https://github.com/${UPSTREAM_OWNER}/${UPSTREAM_REPO}.git"
           git fetch upstream --prune --tags
           NEW_BRANCH="sync/${BRANCH}-${{ env.ts }}"
           git checkout -B "${NEW_BRANCH}" "upstream/${BRANCH}"
