@@ -10,7 +10,6 @@ on:
 permissions:
   contents: write          # 브랜치/릴리스 생성
   pull-requests: write     # PR 생성
-  workflows: write
 
 jobs:
   sync:
@@ -77,7 +76,7 @@ jobs:
           exit 0
 
       - name: Fail on unexpected HTTP code
-        if: ${{ and(ne(steps.merge_upstream.outputs.code, '200'), ne(steps.merge_upstream.outputs.code, '409')) }}
+        if: ${{ steps.merge_upstream.outputs.code != '200' && steps.merge_upstream.outputs.code != '409' }}
         run: |
           echo "merge-upstream returned code='${{ steps.merge_upstream.outputs.code }}' which is not handled"
           exit 1
