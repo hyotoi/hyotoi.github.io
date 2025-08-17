@@ -26,8 +26,6 @@ jobs:
           node-version: "lts/*"
           registry-url: "https://npm.pkg.github.com/"
           scope: '@github-id'
-      - run: npm ci # yarn install
-      - run: npm run build # yarn build
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.ONLY_THIS_REPO_TOKEN }}

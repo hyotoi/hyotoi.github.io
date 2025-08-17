@@ -10,6 +10,7 @@ on:
 permissions:
   contents: write          # 브랜치/릴리스 생성
   pull-requests: write     # PR 생성
+  workflows: write
 
 jobs:
   sync:
@@ -42,6 +43,15 @@ jobs:
           echo "HTTP ${RESP_CODE}"
           echo "Response:" && cat /tmp/resp.json || true
           echo "code=${RESP_CODE}" >> $GITHUB_OUTPUT
+
+          # If the upstream includes workflow file changes, GitHub App token without 'workflows: write' yields 422.
+          # Map 422 to 409 to trigger PR flow instead of failing.
+          if [ "${RESP_CODE}" = "422" ]; then
+            echo "⚠️  Received 422 (likely workflow file update not permitted). Falling back to PR flow."
+            # Override the step output to mimic 409 so downstream steps run.
+            echo "code=409" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
           if [ "${RESP_CODE}" = "200" ]; then
             echo "✅ Fast-forward 완료 (Sync fork)."
