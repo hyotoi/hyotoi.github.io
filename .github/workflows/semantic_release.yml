@@ -8,8 +8,7 @@ on:
  
 permissions:
   contents: read # for checkout
-  workflows: write
- 
+   
 jobs:
   release:
     if: ${{ github.repository == 'ehdwn1991/muse_profile' && !github.event.repository.fork }}
