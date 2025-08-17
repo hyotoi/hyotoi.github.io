@@ -1,119 +1,322 @@
-/* 모달 열릴 때 페이지 스크롤 잠금 */
-html.no-scroll, html.no-scroll body{
-  overflow: hidden;
-  height: 100%;
+// ============================
+//        변수 정의
+// ============================
+
+$card-bg: #fff;
+$card-border: #e7e7e9;
+$card-hover-shadow: 0 10px 16px rgba(0, 0, 0, .06);
+$card-focus-shadow: 0 0 0 3px #2a7ae2;
+
+$modal-z-index: 2147483000;
+$modal-overlay-bg: rgba(0, 0, 0, .45);
+$modal-bg: #fff;
+$modal-shadow: 0 18px 40px rgba(0, 0, 0, .22);
+$modal-transition: .22s;
+
+$breakpoint-mobile: 640px;
+$breakpoint-tablet: 768px;
+
+// ============================
+//         믹스인
+// ============================
+
+@mixin card-transition {
+  transition: transform .12s ease, box-shadow .12s ease;
 }
 
-/* 컨테이너(본문) */
-.initial-content{
+@mixin modal-transition {
+  transition: transform $modal-transition, opacity $modal-transition;
+}
+
+@mixin aspect-ratio($width, $height) {
+  aspect-ratio: #{$width}/#{$height};
+}
+
+@mixin safe-area-bottom($padding: 16px) {
+  bottom: max(#{$padding}, env(safe-area-inset-bottom));
+}
+
+// ============================
+//      페이지 스크롤 제어
+// ============================
+
+html.no-scroll {
+  &,
+  body {
+    overflow: hidden;
+    height: 100%;
+  }
+}
+
+// ============================
+//        멤버 그리드
+// ============================
+
+.initial-content {
   position: relative;
   overflow: visible;
 }
 
-/* 카드 그리드: 모바일 1칸 → 640px부터 2칸(데스크톱까지 고정) */
-.member-grid{
+.member-grid {
   display: grid;
   gap: 20px;
-  grid-template-columns: 1fr;   /* 기본 1열 */
-}
-@media (min-width: 640px){
-  .member-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-/* 카드 */
-.member-card{
-  background:#fff; border:1px solid #e7e7e9; border-radius:16px; overflow:hidden; cursor:pointer;
-  transition: transform .12s ease, box-shadow .12s ease;
-  &:hover{ transform: translateY(-2px); box-shadow: 0 10px 16px rgba(0,0,0,.06); }
-  &:focus-visible{ outline: none; box-shadow:0 0 0 3px #2a7ae2; }
-}
-.member-card__thumb{
-  aspect-ratio:4/5; background:#f6f7f9; display:flex; align-items:center; justify-content:center; overflow:hidden;
-  img{ width:100%; height:100%; object-fit:cover; }
-}
-.member-card__meta{
-  padding: 16px 14px;
-  text-align: center;
-  min-height: 68px;               /* ✅ 이름/악기 공간 확보해 잘림 방지 */
-}
-.member-card__name{
-  margin: 0 0 2px; padding: 0;
-  font-size: 1rem; color: #000; font-weight: 700;
-  line-height: 1.25; word-break: keep-all;  /* ✅ 자연 줄바꿈 */
-}
-.member-card__instrument-role{
-  font-size: .75rem; color: #777; font-weight: 700;
-}
-.member-card__position{
-  font-size: .72rem; font-weight: 700; color: #2a7ae2; display: inline-block;
-}
-
-/* ===== 모달(뷰포트 고정) ===== */
-.member-panel.member-panel--incontainer{
-  position: fixed; inset: 0;
-  z-index: 2147483000;            /* ✅ 사이트 최상단 */
-  display: none; pointer-events: none;
-}
-.member-panel.is-open{ display:block; pointer-events:auto; }
-
-/* 오버레이/시트/닫기버튼 z-index 정리 → 모바일 X 버튼 클릭 문제 해결 */
-.member-panel__overlay{ position:absolute; inset:0; background:rgba(0,0,0,.45); backdrop-filter:saturate(90%) blur(1px); opacity:0; transition:opacity .2s; z-index:1; }
-.member-panel__sheet  {
-  position:absolute; left:50%; top:50%;
-  width:min(640px, 92vw); max-height:min(78vh, 880px);
-  transform:translate(-50%, -50%) scale(.98); opacity:0; transition:transform .22s, opacity .22s;
-  background:#fff; border-radius:18px; box-shadow:0 18px 40px rgba(0,0,0,.22);
-  display:flex; flex-direction:column; overflow:hidden; z-index:2;   /* ✅ 시트가 오버레이 위 */
-}
-.member-panel__close  { position:absolute; right:10px; top:10px; width:36px; height:36px; border:0; border-radius:10px; background:#f3f4f6; cursor:pointer; font-size:20px; z-index:3; }
-.member-panel__close:hover{ background:#e9eaee; }
-.member-panel__body{ padding:18px 20px 24px; overflow:auto; -webkit-overflow-scrolling:touch; }
-
-/* 열림 상태 애니메이션 */
-.member-panel.is-open .member-panel__overlay{ opacity:1; }
-.member-panel.is-open .member-panel__sheet{ transform:translate(-50%, -50%) scale(1); opacity:1; }
-
-/* 모바일: 바텀시트 */
-@media (max-width: 767px){
-  .member-panel__sheet{
-    left:16px; right:16px; top:auto; bottom:max(16px, env(safe-area-inset-bottom));
-    width:auto; height:85vh; border-radius:16px;
-    transform:translateY(calc(100% + 16px));         /* 초기 바깥 */
+  grid-template-columns: 1fr;
+  
+  @media (min-width: $breakpoint-mobile) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .member-panel.is-open .member-panel__sheet{ transform:translateY(0); }
 }
 
-/* 상세 헤더/타이포 */
-.member-detail__header{
-  display:flex; gap:14px; align-items:center; padding:16px 20px 10px; border-bottom:1px solid #eee;
-  img{ width:72px; height:96px; object-fit:cover; border-radius:10px; background:#f6f7f9; }
-}
-.member-detail__sub{ margin:.2rem 0 0; color:#666; }
-.member-detail__section{ margin:14px 0 0; }
-.member-detail__section h4{ margin:0 0 8px; font-size:1rem; }
-.member-detail__section ul{ margin:0; padding-left:18px; }
-.member-detail__section li{ margin:.2rem 0; line-height:1.45; }
+// ============================
+//        멤버 카드
+// ============================
 
-/* 모션 최소화 */
-@media (prefers-reduced-motion: reduce){
-  .member-panel__overlay, .member-panel__sheet{ transition:none !important; }
+.member-card {
+  background: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  @include card-transition;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $card-hover-shadow;
+  }
+  
+  &:focus-visible {
+    outline: none;
+    box-shadow: $card-focus-shadow;
+  }
+  
+  &__thumb {
+    @include aspect-ratio(4, 5);
+    background: #f6f7f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  
+  &__meta {
+    padding: 16px 14px;
+    text-align: center;
+    min-height: 68px;
+  }
+  
+  &__name {
+    margin: 0 0 2px;
+    padding: 0;
+    font-size: 1rem;
+    color: #000;
+    font-weight: 700;
+    line-height: 1.25;
+    word-break: keep-all;
+  }
+  
+  &__instrument-role {
+    font-size: .75rem;
+    color: #777;
+    font-weight: 700;
+  }
+  
+  &__position {
+    font-size: .72rem;
+    font-weight: 700;
+    color: #2a7ae2;
+    display: inline-block;
+  }
 }
 
-/* 모달 열릴 때 masthead 테두리/그림자 제거 + 뒤로 보내기 */
-.modal-open .masthead,
-.modal-open .masthead__inner-wrap,
-.modal-open .masthead__menu,
-.modal-open .masthead .greedy-nav{
-  border:0 !important; box-shadow:none !important; background:transparent !important;
-  z-index:0 !important; position:relative !important;
+// ============================
+//        멤버 패널(모달)
+// ============================
+
+.member-panel {
+  &.member-panel--incontainer {
+    position: fixed;
+    inset: 0;
+    z-index: $modal-z-index;
+    display: none;
+    pointer-events: none;
+  }
+  
+  &.is-open {
+    display: block;
+    pointer-events: auto;
+    
+    .member-panel__overlay {
+      opacity: 1;
+    }
+    
+    .member-panel__sheet {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+  
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: $modal-overlay-bg;
+    backdrop-filter: saturate(90%) blur(1px);
+    opacity: 0;
+    transition: opacity .2s;
+    z-index: 1;
+  }
+  
+  &__sheet {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(640px, 92vw);
+    max-height: min(78vh, 880px);
+    transform: translate(-50%, -50%) scale(.98);
+    opacity: 0;
+    @include modal-transition;
+    background: $modal-bg;
+    border-radius: 18px;
+    box-shadow: $modal-shadow;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 2;
+    
+    @media (max-width: $breakpoint-tablet - 1px) {
+      left: 16px;
+      right: 16px;
+      top: auto;
+      @include safe-area-bottom;
+      width: auto;
+      height: 85vh;
+      border-radius: 16px;
+      transform: translateY(calc(100% + 16px));
+      
+      .member-panel.is-open & {
+        transform: translateY(0);
+      }
+    }
+  }
+  
+  &__close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 10px;
+    background: #f3f4f6;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 3;
+    transition: background .2s;
+    
+    &:hover {
+      background: #e9eaee;
+    }
+  }
+  
+  &__body {
+    padding: 18px 20px 24px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
-.modal-open .masthead::before,
-.modal-open .masthead::after,
-.modal-open .masthead__inner-wrap::before,
-.modal-open .masthead__inner-wrap::after,
-.modal-open .masthead__menu::before,
-.modal-open .masthead__menu::after,
-.modal-open .masthead .greedy-nav::before,
-.modal-open .masthead .greedy-nav::after{
-  content:none !important; border:0 !important; box-shadow:none !important;
+
+// ============================
+//        멤버 상세정보
+// ============================
+
+.member-detail {
+  &__header {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 16px 20px 10px;
+    border-bottom: 1px solid #eee;
+    
+    img {
+      width: 72px;
+      height: 96px;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #f6f7f9;
+    }
+  }
+  
+  &__sub {
+    margin: .2rem 0 0;
+    color: #666;
+  }
+  
+  &__section {
+    margin: 14px 0 0;
+    
+    h4 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+    
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    
+    li {
+      margin: .2rem 0;
+      line-height: 1.45;
+    }
+  }
+}
+
+// ============================
+//      모션 최소화 설정
+// ============================
+
+@media (prefers-reduced-motion: reduce) {
+  .member-panel {
+    &__overlay,
+    &__sheet {
+      transition: none !important;
+    }
+  }
+}
+
+// ============================
+//   모달 열림시 헤더 스타일
+// ============================
+
+.modal-open {
+  .masthead {
+    &,
+    &__inner-wrap,
+    &__menu,
+    .greedy-nav {
+      border: 0 !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      z-index: 0 !important;
+      position: relative !important;
+    }
+    
+    &::before,
+    &::after,
+    &__inner-wrap::before,
+    &__inner-wrap::after,
+    &__menu::before,
+    &__menu::after,
+    .greedy-nav::before,
+    .greedy-nav::after {
+      content: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+  }
 }

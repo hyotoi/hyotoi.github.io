@@ -1,141 +1,152 @@
-/* 메뉴 바 전체 */
-.menu {
-  list-style: none;
-  display: flex;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
-}
+// ============================
+//        변수 및 믹스인
+// ============================
 
-/* 각 메뉴 아이템 */
-.menu-item {
-  position: relative;
-}
+$dropdown-bg: #ffffff;
+$dropdown-border: #ccc;
+$dropdown-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+$dropdown-hover-bg: #f5f7fa;
+$dropdown-hover-color: #007acc;
+$dropdown-min-width: 140px;
+$dropdown-padding: 6px 0;
+$dropdown-transition: all 0.25s ease;
+$dropdown-z-index: 999;
 
-/* 드롭다운 하위 메뉴 기본 상태: 숨김 */
-.dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: white;
-  padding: 10px 0;
-  border: 1px solid #ddd;
-  min-width: 150px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-}
-
-/* 마우스를 올렸을 때 하위 메뉴 노출 */
-.menu-item:hover > .dropdown {
-  display: block;
-}
-
-
-/* 드롭다운이 안 보이는 문제 해결용 */
-.site-nav,
-.menu,
-.menu-item {
+@mixin reset-overflow {
   overflow: visible !important;
   z-index: 100;
 }
 
-
-/* 드롭다운이 포함된 메뉴 구조 대응 */
-.masthead__menu,
-.greedy-nav,
-.visible-links,
-.masthead__menu-item,
-.has-dropdown {
-  position: relative;
-  overflow: visible !important;
-  z-index: 10;
-}
-
-/* 드롭다운 컨테이너 */
-.has-dropdown > .dropdown {
-  display: none;
+@mixin dropdown-base {
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: white;
-  border: 1px solid #ccc;
-  z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 160px;
-  padding: 10px 0;
+  background: $dropdown-bg;
+  min-width: $dropdown-min-width;
+  padding: $dropdown-padding;
+  border-radius: 8px;
+  box-shadow: $dropdown-shadow;
+  z-index: $dropdown-z-index;
 }
 
-/* 마우스를 올렸을 때 드롭다운 표시 */
-.has-dropdown:hover > .dropdown {
-  display: block;
-}
-
-
-
-/* ============================
-          드롭다운 메뉴
-============================ */
-
-.has-dropdown {
-  position: relative;
-}
-
-.has-dropdown > .dropdown {
-  display: block; /* 기본 설정*/
+@mixin dropdown-hidden {
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
   pointer-events: none;
-
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 140px;
-  padding: 6px 0;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  transition: all 0.25s ease;
-  z-index: 999;
 }
 
-.has-dropdown:hover > .dropdown {
+@mixin dropdown-visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
 }
 
-/* 드롭다운 내부 항목 스타일 */
-.dropdown-item {
-  padding: 6px 8px;         
-  padding-left: 12px;
-  padding-right: 3px; 
-  line-height: 1.4;      
-  font-size: 15px;
-  font-weight: 500;
-  color: #333;
-  transition: background 0.2s ease;
+// ============================
+//          메뉴 스타일
+// ============================
+
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 30px;
   margin: 0;
+  padding: 0;
+  
+  &-item {
+    position: relative;
+  }
 }
 
-.dropdown-item a {
-  color: inherit;
-  text-decoration: none;
-  display: inline-block;
-  width: 100%;
-  padding: 2px;
-  line-height: 1.4;
-  margin: 0;
+// ============================
+//     드롭다운 메뉴 시스템
+// ============================
+
+.has-dropdown {
+  position: relative;
+  
+  > .dropdown {
+    @include dropdown-base;
+    @include dropdown-hidden;
+    
+    display: block;
+    transition: $dropdown-transition;
+  }
+  
+  &:hover > .dropdown,
+  &:focus-within > .dropdown {
+    @include dropdown-visible;
+  }
 }
 
-/* hover 시 부드럽게 강조 */
-.dropdown-item:hover {
-  background: #f5f7fa;
-  color: #007acc;
-  cursor: pointer;
+.dropdown {
+  &-item {
+    padding: 6px 8px;
+    padding-left: 12px;
+    padding-right: 3px;
+    line-height: 1.4;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    transition: background 0.2s ease;
+    margin: 0;
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+      display: inline-block;
+      width: 100%;
+      padding: 2px;
+      line-height: 1.4;
+      margin: 0;
+      
+      &:hover,
+      &:focus {
+        color: $dropdown-hover-color;
+        outline: none;
+      }
+    }
+    
+    &:hover {
+      background: $dropdown-hover-bg;
+      color: $dropdown-hover-color;
+      cursor: pointer;
+    }
+  }
 }
 
-.dropdown-item a:hover {
-  color: #007acc;
+// ============================
+//    오버플로우 문제 해결
+// ============================
+
+.site-nav,
+.menu,
+.menu-item,
+.masthead__menu,
+.greedy-nav,
+.visible-links,
+.masthead__menu-item,
+.has-dropdown {
+  @include reset-overflow;
+  position: relative;
+}
+
+// 미디어 쿼리 - 모바일 대응
+@media (max-width: 768px) {
+  .menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .has-dropdown > .dropdown {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+    margin-top: 10px;
+    box-shadow: none;
+    border: 1px solid #eee;
+  }
 }
