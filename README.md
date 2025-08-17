@@ -46,6 +46,9 @@
 
 ## Release
 
+[npm conventional-changelog-conventionalcommits](https://www.npmjs.com/package/conventional-changelog-conventionalcommits)
+
+
 ```shell
 docker create --name sshon_node node:lts-alpine3.21
 docker cp ~/.ssh sshon_node:/root/
@@ -65,3 +68,27 @@ npx conventional-changelog -p conventionalcommits -r 0 --from v1.2.0 --to v1.3.0
 npx conventional-changelog -p conventionalcommits -r 0 --from v0.0.1 --to v0.1.1 
 
 ```
+
+
+```shell
+npm install --save-dev semantic-release
+npm i -D @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/npm @semantic-release/github
+npm install @semantic-release/git @semantic-release/changelog -D
+
+vim .releaserc
+npm i -D conventional-changelog-conventionalcommits
+
+
+
+```
+
+
+## Ref
+
+* [오케스트라 구성](https://ko.wikipedia.org/wiki/%EA%B4%80%ED%98%84%EC%95%85%EB%8B%A8)
+   
+  악기 순서
+  ```yaml
+  Violin,Viola,Cello,Bass,Contrabass,Double Bass,Flute,Oboe,Clarinet,Bassoon,Horn,Trumpet,Trombone,Tuba,Timpani,Xylophone,Marimba,Piano,Harp
+  ```
+  ![image.png](https://upload.wikimedia.org/wikipedia/ko/3/3f/Orchestra.jpg)

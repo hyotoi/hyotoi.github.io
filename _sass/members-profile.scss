@@ -1,0 +1,405 @@
+// ============================
+//        변수 정의
+// ============================
+
+$page-max: 1600px;
+$page-max-xl: 1760px;
+
+$filter-border: #e6e6ef;
+$filter-active: #5a3bf0;
+$filter-item-bg: #fff;
+$filter-item-hover: #f7f8fb;
+
+$section-title-border: #2a7ae2;
+$list-border: #eee;
+$card-border: #e8e8ea;
+$card-bg: #fff;
+$card-shadow: 0 6px 18px rgba(0, 0, 0, .06);
+
+$thumb-bg: #f6f7f9;
+$text-overlay-bg: linear-gradient(to top, rgba(0,0,0,.58), rgba(0,0,0,.28) 38%, rgba(0,0,0,0) 72%);
+
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-large: 1280px;
+$breakpoint-xlarge: 1536px;
+$breakpoint-xxlarge: 1800px;
+
+// ============================
+//         믹스인
+// ============================
+
+@mixin grid-columns($columns) {
+  grid-template-columns: repeat($columns, minmax(0, 1fr));
+}
+
+@mixin card-style {
+  border: 1px solid $card-border;
+  border-radius: 12px;
+  overflow: hidden;
+  background: $card-bg;
+}
+
+@mixin button-reset {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+@mixin focus-visible {
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px $section-title-border;
+    border-radius: 10px;
+  }
+}
+
+// ============================
+//      페이지 레이아웃
+// ============================
+
+.layout--single {
+  .page__content {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
+  &.wide .page__content {
+    max-width: $page-max;
+  }
+}
+
+.instrument-filter,
+.members-sections {
+  max-width: $page-max;
+  margin-inline: auto;
+}
+
+@media (min-width: $breakpoint-xxlarge) {
+  .layout--single.wide .page__content,
+  .instrument-filter,
+  .members-sections {
+    max-width: $page-max-xl;
+  }
+}
+
+// ============================
+//      악기 필터
+// ============================
+
+.instrument-filter {
+  margin: 8px 0 16px;
+  
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 12px;
+    border: 1px solid $filter-border;
+    border-radius: 12px;
+    border-bottom: 3px solid $filter-active;
+    background: $filter-item-bg;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    align-items: center;
+    
+    @media (min-width: $breakpoint-large) {
+      padding: 14px 16px;
+      gap: 10px 14px;
+    }
+  }
+}
+
+.if-item {
+  display: inline-block;
+  line-height: 1;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid #dfe1e6;
+  background: $filter-item-bg;
+  color: #333;
+  font-size: .92rem;
+  cursor: pointer;
+  transition: background .2s;
+  
+  &:hover {
+    background: $filter-item-hover;
+  }
+  
+  &.is-active {
+    border-color: $filter-active;
+    color: $filter-active;
+    font-weight: 700;
+  }
+  
+  @media (min-width: $breakpoint-large) {
+    font-size: .95rem;
+  }
+}
+
+// ============================
+//      멤버 섹션
+// ============================
+
+.members-sections {
+  display: block;
+}
+
+.instrument-section {
+  margin: 18px 0 28px;
+}
+
+.instrument-title {
+  font-size: 1.15rem;
+  margin: 0 0 10px;
+  border-left: 4px solid $section-title-border;
+  padding-left: 10px;
+}
+
+// ============================
+//      멤버 리스트
+// ============================
+
+.member-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid $list-border;
+  
+  @media (min-width: $breakpoint-desktop) {
+    display: grid;
+    @include grid-columns(2);
+    gap: 14px;
+    border-top: 0;
+  }
+  
+  @media (min-width: $breakpoint-large) {
+    @include grid-columns(3);
+  }
+  
+  @media (min-width: $breakpoint-xlarge) {
+    @include grid-columns(4);
+  }
+}
+
+.member-row {
+  border-bottom: 1px solid $list-border;
+  
+  @media (min-width: $breakpoint-desktop) {
+    @include card-style;
+  }
+  
+  &.is-hidden {
+    display: none !important;
+  }
+}
+
+// ============================
+//      멤버 카드 헤더
+// ============================
+
+.row-head {
+  @include button-reset;
+  @include focus-visible;
+  
+  width: 100%;
+  display: block;
+  position: relative;
+  text-align: left;
+  height: 100%;
+  
+  @media (min-width: $breakpoint-desktop) {
+    border-bottom: 1px solid #f0f0f2;
+  }
+}
+
+.head-left {
+  position: relative;
+  display: block;
+  min-width: 0;
+  height: 100%;
+}
+
+.head-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  background: $thumb-bg;
+  transition: transform .18s ease;
+  
+  @media (hover: hover) {
+    .row-head:hover & {
+      transform: scale(1.02);
+    }
+  }
+}
+
+.head-texts {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 2px;
+  padding: 12px 12px 10px;
+  color: #fff;
+  background: $text-overlay-bg;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.head-name {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+  
+  @media (max-width: $breakpoint-tablet - 1px) {
+    font-size: .98rem;
+  }
+}
+
+.head-role {
+  color: #eee;
+  font-size: .86rem;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+  
+  @media (max-width: $breakpoint-tablet - 1px) {
+    font-size: .8rem;
+  }
+}
+
+.head-icon {
+  display: none;
+}
+
+// ============================
+//      멤버 상세 본문
+// ============================
+
+.row-body {
+  padding: 14px;
+}
+
+.detail-block {
+  margin: 10px 0 0;
+  
+  &:first-child {
+    margin-top: 0;
+  }
+  
+  h4 {
+    margin: 0 0 6px;
+    font-size: .9rem;
+    color: #222;
+  }
+  
+  ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+  
+  li {
+    margin: .2rem 0;
+    line-height: 1.45;
+  }
+}
+
+// ============================
+//    섹션 하단 상세 박스
+// ============================
+
+.instrument-detail {
+  position: relative;
+  margin: 10px 0 22px;
+  border: 1px solid $card-border;
+  border-radius: 14px;
+  background: $card-bg;
+  box-shadow: $card-shadow;
+  padding: 14px;
+}
+
+.detail-wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  align-items: flex-start;
+  
+  @media (max-width: $breakpoint-tablet - 1px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-left {
+  .detail-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    background: $thumb-bg;
+    
+    @media (max-width: $breakpoint-tablet - 1px) {
+      max-width: 220px;
+    }
+  }
+  
+  .detail-meta {
+    margin-top: 10px;
+  }
+  
+  .detail-name {
+    margin: 0 0 4px;
+    font-size: 1.25rem;
+  }
+  
+  .detail-role {
+    margin: 0;
+    color: #666;
+    font-size: .95rem;
+  }
+}
+
+.detail-right {
+  .detail-block {
+    margin-top: 0;
+  }
+}
+
+.detail-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 10px;
+  background: #f3f4f6;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background .2s;
+  
+  &:hover {
+    background: #e9eaee;
+  }
+}
+
+// ============================
+//      접근성 설정
+// ============================
+
+@media (prefers-reduced-motion: reduce) {
+  .head-thumb,
+  .if-item,
+  .detail-close {
+    transition: none !important;
+  }
+}

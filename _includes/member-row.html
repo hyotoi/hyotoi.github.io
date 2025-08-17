@@ -1,0 +1,74 @@
+<li class="member-row" data-accordion>
+  <button class="row-head"
+          type="button"
+          aria-expanded="false"
+          aria-controls="row-{{ include.section_id }}-{{ include.index }}-{{ include.role_suffix }}"
+          id="head-{{ include.section_id }}-{{ include.index }}-{{ include.role_suffix }}">
+    <span class="head-left">
+      <img class="head-thumb" 
+           src="{{ include.member.image | relative_url }}" 
+           alt="{{ include.member.name }}" 
+           loading="lazy">
+      <span class="head-texts">
+        <strong class="head-name">{{ include.member.name }}</strong>
+        <span class="head-role">
+          {%- if include.member.role -%}
+            {{ include.member.role }}
+          {%- else -%}
+            단원
+          {%- endif -%}
+        </span>
+      </span>
+    </span>
+    <span class="head-icon" aria-hidden="true">▾</span>
+  </button>
+  <div class="row-body"
+       id="row-{{ include.section_id }}-{{ include.index }}-{{ include.role_suffix }}"
+       role="region"
+       aria-labelledby="head-{{ include.section_id }}-{{ include.index }}-{{ include.role_suffix }}"
+       hidden>
+    {% if include.member.education %}
+    <div class="detail-block">
+      <h4>학력</h4>
+      <ul>
+        {% for item in include.member.education %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    
+    {% if include.member.concours %}
+    <div class="detail-block">
+      <h4>수상 내역</h4>
+      <ul>
+        {% for item in include.member.concours %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    
+    {% if include.member.experience %}
+    <div class="detail-block">
+      <h4>경력</h4>
+      <ul>
+        {% for item in include.member.experience %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    
+    {% if include.member.current %}
+    <div class="detail-block">
+      <h4>현재</h4>
+      <ul>
+        {% for item in include.member.current %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</li>
