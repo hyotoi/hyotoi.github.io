@@ -66,12 +66,6 @@
         "changelogTitle": "# CHANGELOG"
       }
     ],
-    ["@semantic-release/npm",
-      {
-        "pkgRoot": ".",
-        "tarball": "dist"
-      }
-    ],
     "@semantic-release/github",
     [
       "@semantic-release/git",

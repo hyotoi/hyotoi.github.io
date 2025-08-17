@@ -37,7 +37,6 @@ jobs:
             @semantic-release/git \
             @semantic-release/changelog \
             conventional-changelog-conventionalcommits
-      - run: npx semantic-release
+      - run: npx semantic-release -e ./noop.js
         env:
           GITHUB_TOKEN: ${{ secrets.ONLY_THIS_REPO_TOKEN }}
- 
